@@ -13,6 +13,9 @@
 		FD153DCC1F65866200ED463C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD153DCB1F65866200ED463C /* Assets.xcassets */; };
 		FD153DCF1F65866200ED463C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD153DCD1F65866200ED463C /* LaunchScreen.storyboard */; };
 		FD153DDA1F65866200ED463C /* FindMyBikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DD91F65866200ED463C /* FindMyBikeTests.swift */; };
+		FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE41F65962700ED463C /* EditBikeViewController.swift */; };
+		FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE61F65964200ED463C /* ShowBikeViewController.swift */; };
+		FD153DE91F65A97A00ED463C /* Bike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE81F65A97A00ED463C /* Bike.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		FD153DD51F65866200ED463C /* FindMyBikeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FindMyBikeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD153DD91F65866200ED463C /* FindMyBikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMyBikeTests.swift; sourceTree = "<group>"; };
 		FD153DDB1F65866200ED463C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD153DE41F65962700ED463C /* EditBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBikeViewController.swift; sourceTree = "<group>"; };
+		FD153DE61F65964200ED463C /* ShowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowBikeViewController.swift; sourceTree = "<group>"; };
+		FD153DE81F65A97A00ED463C /* Bike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bike.swift; path = ../../AboutMyBike/AboutMyBike/Bike.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,9 @@
 				FD153DCB1F65866200ED463C /* Assets.xcassets */,
 				FD153DCD1F65866200ED463C /* LaunchScreen.storyboard */,
 				FD153DD01F65866200ED463C /* Info.plist */,
+				FD153DE41F65962700ED463C /* EditBikeViewController.swift */,
+				FD153DE61F65964200ED463C /* ShowBikeViewController.swift */,
+				FD153DE81F65A97A00ED463C /* Bike.swift */,
 			);
 			path = FindMyBike;
 			sourceTree = "<group>";
@@ -202,6 +211,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD153DC71F65866200ED463C /* ViewController.swift in Sources */,
+				FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */,
+				FD153DE91F65A97A00ED463C /* Bike.swift in Sources */,
+				FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */,
 				FD153DC51F65866200ED463C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
