@@ -7,36 +7,72 @@
 //
 
 import UIKit
+import os.log
 
 class EditBikeViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Properties
 
+    static let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: EditBikeViewController.self))
+
+    static let saveBikeSegueIdentifier = "saveBike"
+
+    // Used for exchange of bike data with ShowBikeViewController
     var bike: Bike?
 
+    // Used to store new bike details temporarily after validation
+    private var validatedBike: Bike?
+
     @IBOutlet weak var makeTextField: UITextField!
+    @IBOutlet weak var modelTextField: UITextField!
+    @IBOutlet weak var beaconUUIDTextField: UITextField!
+    @IBOutlet weak var beaconMajorTextField: UITextField!
+    @IBOutlet weak var beaconMinorTextField: UITextField!
 
     // MARK: UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Handle user input in the text field through delegate callbacks
+        // Handle user input in the text fields through delegate callbacks
         makeTextField.delegate = self
+        modelTextField.delegate = self
+        beaconUUIDTextField.delegate = self
+        beaconMajorTextField.delegate = self
+        beaconMinorTextField.delegate = self
 
         if let bike = bike {
             makeTextField.text = bike.make
+            modelTextField.text = bike.model
+            beaconUUIDTextField.text = bike.beaconUUID.uuidString
+            beaconMajorTextField.text = String(bike.beaconMajor)
+            beaconMinorTextField.text = String(bike.beaconMinor)
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        assert(segue.identifier == EditBikeViewController.saveBikeSegueIdentifier)
+
         super.prepare(for: segue, sender: sender)
 
-        let make = makeTextField.text ?? ""
+        // shouldPerformSegue has already done the necessary validation, so we just pass it back
+        bike = validatedBike
+    }
 
-        bike = Bike()
-        if !make.isEmpty {
-            bike!.make = make
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        assert(identifier == EditBikeViewController.saveBikeSegueIdentifier)
+
+        do {
+            try validatedBike = createBikeFromTextFields()
+            return true
+        } catch let error as Bike.ValidationError {
+            let alert = createErrorAlert(title: error.title, message: error.description)
+            parent?.present(alert, animated: true)
+
+            return false
+        } catch {
+            os_log("Unexpected error creating bike: %@", log: EditBikeViewController.log, type: .error, error.localizedDescription)
+            return false
         }
     }
 
@@ -54,5 +90,25 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate {
         // Hide the keyboard
         textField.resignFirstResponder()
         return true
+    }
+
+    // MARK: Private methods
+
+    private func createBikeFromTextFields() throws -> Bike {
+        let make = makeTextField.text ?? ""
+        let model = modelTextField.text ?? ""
+        let beaconUUIDStr = beaconUUIDTextField.text ?? ""
+        let beaconMajorStr = beaconMajorTextField.text ?? ""
+        let beaconMinorStr = beaconMinorTextField.text ?? ""
+
+        return try Bike(make: make, model: model, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: nil)
+    }
+
+    private func createErrorAlert(title: String, message: String) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        return alertController
     }
 }

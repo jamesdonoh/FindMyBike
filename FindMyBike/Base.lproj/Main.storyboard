@@ -68,15 +68,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="034-Q9-95H">
-                                <rect key="frame" x="16" y="72" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-hZ-KGD">
+                                <rect key="frame" x="16" y="84" width="343" height="144"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Make" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="034-Q9-95H">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Model" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4to-Ck-Y81">
+                                        <rect key="frame" x="0.0" y="38" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Beacon UUID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pb5-w6-1Rf">
+                                        <rect key="frame" x="0.0" y="76" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="z6K-US-5ag">
+                                        <rect key="frame" x="0.0" y="114" width="343" height="30"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Beacon major" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2EF-0m-d9l">
+                                                <rect key="frame" x="0.0" y="0.0" width="167.5" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Beacon minor" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M9T-Fb-pbn">
+                                                <rect key="frame" x="175.5" y="0.0" width="167.5" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="2EF-0m-d9l" firstAttribute="width" secondItem="M9T-Fb-pbn" secondAttribute="width" id="Y20-S0-JLm"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="leading" secondItem="lyZ-el-GiB" secondAttribute="leadingMargin" id="J5x-0I-QRn"/>
+                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="top" secondItem="8hk-US-aqW" secondAttribute="bottom" constant="20" id="YCX-X7-5wd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5Hx-hZ-KGD" secondAttribute="trailing" id="dPQ-L9-bVW"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Bike" id="eBZ-sh-rEi">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="S3q-6t-vEo">
@@ -86,12 +127,16 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Qtl-WT-64S">
                             <connections>
-                                <segue destination="abz-bZ-tru" kind="unwind" unwindAction="unwindToShowBikeWithSender:" id="eBb-RS-uto"/>
+                                <segue destination="abz-bZ-tru" kind="unwind" identifier="saveBike" unwindAction="unwindToShowBikeWithSender:" id="eBb-RS-uto"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="beaconMajorTextField" destination="2EF-0m-d9l" id="LJq-bf-KVl"/>
+                        <outlet property="beaconMinorTextField" destination="M9T-Fb-pbn" id="jGZ-RW-o2U"/>
+                        <outlet property="beaconUUIDTextField" destination="Pb5-w6-1Rf" id="tlo-Rm-Y8U"/>
                         <outlet property="makeTextField" destination="034-Q9-95H" id="jRl-i4-70X"/>
+                        <outlet property="modelTextField" destination="4to-Ck-Y81" id="2AV-N6-e9D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0I-fe-h22" userLabel="First Responder" sceneMemberID="firstResponder"/>

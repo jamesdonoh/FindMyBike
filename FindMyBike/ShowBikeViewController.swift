@@ -29,7 +29,9 @@ class ShowBikeViewController: UIViewController {
             fatalError("Unexpected destination: \(segue.destination)")
         }
 
-        editBikeViewController.bike = bike
+        // Temporary for testing
+        //editBikeViewController.bike = bike
+        editBikeViewController.bike = bike ?? Bike()
     }
 
     @IBAction func unwindToShowBike(sender: UIStoryboardSegue) {
