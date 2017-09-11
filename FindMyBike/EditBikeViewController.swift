@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class EditBikeViewController: UIViewController, UITextFieldDelegate {
+class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     // MARK: Properties
 
@@ -28,6 +28,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var beaconUUIDTextField: UITextField!
     @IBOutlet weak var beaconMajorTextField: UITextField!
     @IBOutlet weak var beaconMinorTextField: UITextField!
+    @IBOutlet weak var photoImageView: UIImageView!
 
     // MARK: UIViewController
 
@@ -47,6 +48,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate {
             beaconUUIDTextField.text = bike.beaconUUID.uuidString
             beaconMajorTextField.text = String(bike.beaconMajor)
             beaconMinorTextField.text = String(bike.beaconMinor)
+            photoImageView.image = bike.photo
         }
     }
 
@@ -63,7 +65,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate {
         assert(identifier == EditBikeViewController.saveBikeSegueIdentifier)
 
         do {
-            try validatedBike = createBikeFromTextFields()
+            try validatedBike = createBike()
             return true
         } catch let error as Bike.ValidationError {
             let alert = createErrorAlert(title: error.title, message: error.description)
@@ -76,12 +78,42 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    // MARK: Actions
+
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         guard let owningNavigationController = navigationController else {
             fatalError("Not inside a navigation controller")
         }
 
         owningNavigationController.popViewController(animated: true)
+    }
+
+    @IBAction func choosePhoto() {
+        // Hide the keyboard
+        view.endEditing(false)
+
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+
+        present(imagePickerController, animated: true, completion: nil)
+    }
+
+    // MARK: UIImagePickerControllerDelegate
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            fatalError("Expected an image from the picker")
+        }
+
+        print(selectedImage)
+        photoImageView.image = selectedImage
+
+        dismiss(animated: true, completion: nil)
     }
 
     // MARK: UITextFieldDelegate
@@ -94,14 +126,15 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Private methods
 
-    private func createBikeFromTextFields() throws -> Bike {
+    private func createBike() throws -> Bike {
         let make = makeTextField.text ?? ""
         let model = modelTextField.text ?? ""
         let beaconUUIDStr = beaconUUIDTextField.text ?? ""
         let beaconMajorStr = beaconMajorTextField.text ?? ""
         let beaconMinorStr = beaconMinorTextField.text ?? ""
+        let photo = photoImageView.image
 
-        return try Bike(make: make, model: model, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: nil)
+        return try Bike(make: make, model: model, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: photo)
     }
 
     private func createErrorAlert(title: String, message: String) -> UIAlertController {

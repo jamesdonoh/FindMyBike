@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wSU-Uo-Igc">
-                                <rect key="frame" x="16" y="84" width="343" height="20.5"/>
+                                <rect key="frame" x="16" y="84" width="343" height="148.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bike configured" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E81-Ei-bDf">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -31,6 +32,24 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Unv-X3-1fg">
+                                        <rect key="frame" x="0.0" y="20.5" width="343" height="128"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="128" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-WO-qit">
+                                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" id="gyI-qI-mYc"/>
+                                                    <constraint firstAttribute="width" secondItem="JVk-WO-qit" secondAttribute="height" multiplier="1:1" id="v1J-q4-cpe"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sq0-7C-L7w">
+                                                <rect key="frame" x="136" y="0.0" width="207" height="128"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -50,6 +69,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bikeLabel" destination="E81-Ei-bDf" id="5FE-6i-MHw"/>
+                        <outlet property="photoImageView" destination="JVk-WO-qit" id="fUx-Io-OAl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="voy-M8-unp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -69,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-hZ-KGD">
-                                <rect key="frame" x="16" y="84" width="343" height="144"/>
+                                <rect key="frame" x="16" y="84" width="343" height="533"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Make" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="034-Q9-95H">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -109,6 +129,19 @@
                                             <constraint firstItem="2EF-0m-d9l" firstAttribute="width" secondItem="M9T-Fb-pbn" secondAttribute="width" id="Y20-S0-JLm"/>
                                         </constraints>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2q5-4G-S7J">
+                                        <rect key="frame" x="0.0" y="152" width="343" height="30"/>
+                                        <state key="normal" title="Choose photo"/>
+                                        <connections>
+                                            <action selector="choosePhoto" destination="Pnl-85-LtG" eventType="touchUpInside" id="hmN-LZ-w15"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-ad-YWV">
+                                        <rect key="frame" x="0.0" y="190" width="343" height="343"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Ctc-ad-YWV" secondAttribute="height" multiplier="1:1" id="9u5-3r-Llq"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -137,6 +170,7 @@
                         <outlet property="beaconUUIDTextField" destination="Pb5-w6-1Rf" id="tlo-Rm-Y8U"/>
                         <outlet property="makeTextField" destination="034-Q9-95H" id="jRl-i4-70X"/>
                         <outlet property="modelTextField" destination="4to-Ck-Y81" id="2AV-N6-e9D"/>
+                        <outlet property="photoImageView" destination="Ctc-ad-YWV" id="xgC-GF-A1N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0I-fe-h22" userLabel="First Responder" sceneMemberID="firstResponder"/>

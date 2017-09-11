@@ -12,9 +12,14 @@ class ShowBikeViewController: UIViewController {
 
     // MARK: Properties
 
+    @IBOutlet weak var photoImageView: UIImageView!
+    
     var bike: Bike? {
         willSet {
-            bikeLabel.text = "\(newValue!)"
+            if let newBike = newValue {
+                bikeLabel.text = "\(newBike)"
+                photoImageView.image = newBike.photo
+            }
         }
     }
 
