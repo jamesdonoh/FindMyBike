@@ -13,19 +13,35 @@ class ShowBikeViewController: UIViewController {
     // MARK: Properties
 
     @IBOutlet weak var photoImageView: UIImageView!
-    
+    @IBOutlet weak var makeLabel: UILabel!
+    @IBOutlet weak var modelLabel: UILabel!
+    @IBOutlet weak var proximityLabel: UILabel!
+
     var bike: Bike? {
         willSet {
             if let newBike = newValue {
-                bikeLabel.text = "\(newBike)"
                 photoImageView.image = newBike.photo
+                makeLabel.text = newBike.make
+                modelLabel.text = newBike.model
+                //proximityLabel.text = "Proximity: somewhere"
+
+                view.backgroundColor = UIColor.white
             }
         }
     }
 
-    @IBOutlet weak var bikeLabel: UILabel!
-
     // MARK: UIViewController
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        photoImageView.image = nil
+        makeLabel.text = nil
+        modelLabel.text = nil
+        proximityLabel.text = nil
+
+        view.backgroundColor = UIColor.groupTableViewBackground
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
