@@ -15,6 +15,10 @@
 		FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE41F65962700ED463C /* EditBikeViewController.swift */; };
 		FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE61F65964200ED463C /* ShowBikeViewController.swift */; };
 		FD153DE91F65A97A00ED463C /* Bike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE81F65A97A00ED463C /* Bike.swift */; };
+		FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */; };
+		FDE47A381F6D7D05004D0C45 /* Ranging.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A331F6D7D05004D0C45 /* Ranging.swift */; };
+		FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */; };
+		FDE47A3A1F6D7D05004D0C45 /* AppEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,10 @@
 		FD153DE41F65962700ED463C /* EditBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBikeViewController.swift; sourceTree = "<group>"; };
 		FD153DE61F65964200ED463C /* ShowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowBikeViewController.swift; sourceTree = "<group>"; };
 		FD153DE81F65A97A00ED463C /* Bike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bike.swift; path = ../../AboutMyBike/AboutMyBike/Bike.swift; sourceTree = "<group>"; };
+		FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BluetoothSupport.swift; path = ../../BeaconRanger/BeaconRanger/BluetoothSupport.swift; sourceTree = "<group>"; };
+		FDE47A331F6D7D05004D0C45 /* Ranging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ranging.swift; path = ../../BeaconRanger/BeaconRanger/Ranging.swift; sourceTree = "<group>"; };
+		FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertFactory.swift; path = ../../BeaconRanger/BeaconRanger/AlertFactory.swift; sourceTree = "<group>"; };
+		FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppEventViewController.swift; path = ../../BeaconRanger/BeaconRanger/AppEventViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,10 @@
 			children = (
 				FD153DC41F65866200ED463C /* AppDelegate.swift */,
 				FD153DC81F65866200ED463C /* Main.storyboard */,
+				FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */,
+				FDE47A331F6D7D05004D0C45 /* Ranging.swift */,
+				FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */,
+				FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */,
 				FD153DCB1F65866200ED463C /* Assets.xcassets */,
 				FD153DCD1F65866200ED463C /* LaunchScreen.storyboard */,
 				FD153DD01F65866200ED463C /* Info.plist */,
@@ -207,9 +219,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDE47A381F6D7D05004D0C45 /* Ranging.swift in Sources */,
+				FDE47A3A1F6D7D05004D0C45 /* AppEventViewController.swift in Sources */,
 				FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */,
 				FD153DE91F65A97A00ED463C /* Bike.swift in Sources */,
 				FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */,
+				FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */,
+				FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */,
 				FD153DC51F65866200ED463C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

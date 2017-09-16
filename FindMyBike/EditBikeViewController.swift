@@ -35,6 +35,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     // MARK: UIViewController
 
     override func viewDidLoad() {
+        os_log("viewDidLoad", log: EditBikeViewController.log, type: .debug)
+
         super.viewDidLoad()
 
         // Handle user input in the text fields through delegate callbacks
