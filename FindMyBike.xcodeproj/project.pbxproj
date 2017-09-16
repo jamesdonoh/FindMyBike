@@ -426,6 +426,7 @@
 				FD153DE01F65866200ED463C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD153DE11F65866200ED463C /* Build configuration list for PBXNativeTarget "FindMyBikeTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +435,7 @@
 				FD153DE31F65866200ED463C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

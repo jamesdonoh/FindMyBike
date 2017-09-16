@@ -92,8 +92,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-hZ-KGD">
-                                <rect key="frame" x="16" y="84" width="343" height="533"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-hZ-KGD" userLabel="Outer Stack View">
+                                <rect key="frame" x="16" y="84" width="343" height="450"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Make" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="034-Q9-95H">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -113,7 +113,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="z6K-US-5ag">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="z6K-US-5ag" userLabel="Major Minor Stack View">
                                         <rect key="frame" x="0.0" y="114" width="343" height="30"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Beacon major" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2EF-0m-d9l">
@@ -140,20 +140,18 @@
                                             <action selector="choosePhoto" destination="Pnl-85-LtG" eventType="touchUpInside" id="hmN-LZ-w15"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="240" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-ad-YWV">
-                                        <rect key="frame" x="0.0" y="190" width="343" height="343"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Ctc-ad-YWV" secondAttribute="height" multiplier="1:1" id="9u5-3r-Llq"/>
-                                        </constraints>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="260" translatesAutoresizingMaskIntoConstraints="NO" id="XBR-VA-x7b" userLabel="Bike Image View">
+                                        <rect key="frame" x="0.0" y="190" width="343" height="260"/>
                                     </imageView>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="leading" secondItem="lyZ-el-GiB" secondAttribute="leadingMargin" id="J5x-0I-QRn"/>
-                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="top" secondItem="8hk-US-aqW" secondAttribute="bottom" constant="20" id="YCX-X7-5wd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5Hx-hZ-KGD" secondAttribute="trailing" id="dPQ-L9-bVW"/>
+                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="top" secondItem="8hk-US-aqW" secondAttribute="bottom" constant="20" id="bxv-Bt-oyk"/>
+                            <constraint firstItem="7fi-Ld-Ub6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XBR-VA-x7b" secondAttribute="bottom" constant="8" id="fht-vF-kXr"/>
+                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="leading" secondItem="lyZ-el-GiB" secondAttribute="leadingMargin" id="i1n-Ug-rqK"/>
+                            <constraint firstItem="5Hx-hZ-KGD" firstAttribute="trailing" secondItem="lyZ-el-GiB" secondAttribute="trailingMargin" id="jGe-Ca-AMz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Bike" id="eBZ-sh-rEi">
@@ -174,7 +172,7 @@
                         <outlet property="beaconUUIDTextField" destination="Pb5-w6-1Rf" id="tlo-Rm-Y8U"/>
                         <outlet property="makeTextField" destination="034-Q9-95H" id="jRl-i4-70X"/>
                         <outlet property="modelTextField" destination="4to-Ck-Y81" id="2AV-N6-e9D"/>
-                        <outlet property="photoImageView" destination="Ctc-ad-YWV" id="xgC-GF-A1N"/>
+                        <outlet property="photoImageView" destination="XBR-VA-x7b" id="6Yd-XB-vEa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0I-fe-h22" userLabel="First Responder" sceneMemberID="firstResponder"/>

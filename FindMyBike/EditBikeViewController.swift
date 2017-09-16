@@ -30,6 +30,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBOutlet weak var beaconMinorTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
 
+    weak var photoAspectRatioConstraint: NSLayoutConstraint!
+
     // MARK: UIViewController
 
     override func viewDidLoad() {
@@ -48,7 +50,10 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
             beaconUUIDTextField.text = bike.beaconUUID.uuidString
             beaconMajorTextField.text = String(bike.beaconMajor)
             beaconMinorTextField.text = String(bike.beaconMinor)
-            photoImageView.image = bike.photo
+
+            if let photo = bike.photo {
+                updatePhotoImage(photo: photo)
+            }
         }
     }
 
@@ -110,8 +115,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
             fatalError("Expected an image from the picker")
         }
 
-        print(selectedImage)
-        photoImageView.image = selectedImage
+        updatePhotoImage(photo: selectedImage)
 
         dismiss(animated: true, completion: nil)
     }
@@ -143,5 +147,27 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         alertController.addAction(okAction)
 
         return alertController
+    }
+
+    // Updates the photo image view, programmatically creating a new aspect ratio constraint
+    // to allow the image view to remain flush with the controls above it. Without this, the 
+    // height of the image view tries to grow to match the actual image height.
+    //
+    // Note: this has to be destructive because multipler is a read-only constraint property
+    //
+    private func updatePhotoImage(photo: UIImage) {
+        // If there was an existing constraint, deactivate it before replacing
+        if photoAspectRatioConstraint != nil {
+            photoAspectRatioConstraint.isActive = false
+        }
+
+        let aspectRatio = photo.size.width / photo.size.height
+        photoAspectRatioConstraint = NSLayoutConstraint(item: photoImageView, attribute: .width, relatedBy: .equal, toItem: photoImageView, attribute: .height, multiplier: aspectRatio, constant: 0)
+
+        // Priority should be less than required constraint limiting height to guide bottom (1000)
+        photoAspectRatioConstraint.priority = 749
+
+        photoImageView.addConstraint(photoAspectRatioConstraint)
+        photoImageView.image = photo
     }
 }
