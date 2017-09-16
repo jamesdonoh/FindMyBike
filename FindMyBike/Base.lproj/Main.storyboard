@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="g4h-JH-yhs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mB9-my-zwR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,6 +12,67 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Main-->
+        <scene sceneID="iXh-gH-8sT">
+            <objects>
+                <viewController id="dL4-3m-fVo" userLabel="Main" customClass="MainViewController" customModule="FindMyBike" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cLX-q1-9lw"/>
+                        <viewControllerLayoutGuide type="bottom" id="O3G-vv-uar"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CAy-X8-PdN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8dA-EY-yjr">
+                                <rect key="frame" x="16" y="84" width="343" height="541"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgu-d6-eDr">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGY-US-40g" userLabel="Status Container View">
+                                        <rect key="frame" x="0.0" y="20.5" width="343" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="HLn-Vf-sjS"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="PK8-vz-MK8" kind="embed" id="K7d-CW-0Hk"/>
+                                        </connections>
+                                    </containerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearby bikes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqB-PY-PzG">
+                                        <rect key="frame" x="0.0" y="120.5" width="343" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Th8-LK-ufO" userLabel="Ranging Container View">
+                                        <rect key="frame" x="0.0" y="-165" width="343" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="400" id="iu3-Tq-vS6"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="FXJ-kD-ylQ" kind="embed" id="adk-3z-glX"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="8dA-EY-yjr" secondAttribute="trailing" id="STb-iX-0xk"/>
+                            <constraint firstItem="8dA-EY-yjr" firstAttribute="leading" secondItem="CAy-X8-PdN" secondAttribute="leadingMargin" id="fug-gq-RPp"/>
+                            <constraint firstItem="8dA-EY-yjr" firstAttribute="top" secondItem="cLX-q1-9lw" secondAttribute="bottom" constant="20" id="xpd-tU-WJH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="FindMyBike" id="2Kh-B8-i50"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="57U-ej-X2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1176.8" y="-635.53223388305855"/>
+        </scene>
         <!--FindMyBike-->
         <scene sceneID="hl5-cm-cIy">
             <objects>
@@ -197,6 +258,87 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zkc-8M-BDz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="237.59999999999999" y="103.89805097451276"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="anN-1W-TKL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mB9-my-zwR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cHF-pT-HPq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dL4-3m-fVo" kind="relationship" relationship="rootViewController" id="QIw-8B-sPk"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6xh-sE-rXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="238" y="-634"/>
+        </scene>
+        <!--Status View Controller-->
+        <scene sceneID="M9g-Su-3oJ">
+            <objects>
+                <viewController id="PK8-vz-MK8" customClass="StatusViewController" customModule="FindMyBike" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="By1-nw-Oce">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Everything OK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJ9-sz-9j8">
+                                <rect key="frame" x="0.0" y="0.0" width="110" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CpU-Gn-UCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1950" y="-906"/>
+        </scene>
+        <!--Ranging Table View Controller-->
+        <scene sceneID="iQd-h4-OkP">
+            <objects>
+                <tableViewController id="FXJ-kD-ylQ" userLabel="Ranging Table View Controller" customClass="RangingTableViewController" customModule="FindMyBike" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="au1-r6-GN8">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="400"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RangingTableViewCell" id="fjy-9p-Rfb" customClass="RangingTableViewCell" customModule="FindMyBike" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fjy-9p-Rfb" id="ncU-oi-Z4k">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC8-nA-Xut">
+                                            <rect key="frame" x="0.0" y="11" width="343" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="HC8-nA-Xut" id="7Li-8h-s9F"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="FXJ-kD-ylQ" id="vEF-Cc-FIu"/>
+                            <outlet property="delegate" destination="FXJ-kD-ylQ" id="eip-Gh-yjX"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4KM-ft-qNh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1949.5999999999999" y="-515.44227886056979"/>
         </scene>
     </scenes>
 </document>

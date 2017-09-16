@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD11EE9E1F6DA0E200A597CF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD11EE9D1F6DA0E200A597CF /* MainViewController.swift */; };
+		FD11EEA21F6DA13C00A597CF /* RangingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD11EEA11F6DA13C00A597CF /* RangingTableViewController.swift */; };
+		FD11EEA41F6DA79C00A597CF /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD11EEA31F6DA79C00A597CF /* StatusViewController.swift */; };
+		FD11EEA81F6DA9D900A597CF /* RangingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD11EEA71F6DA9D900A597CF /* RangingTableViewCell.swift */; };
 		FD153DC51F65866200ED463C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DC41F65866200ED463C /* AppDelegate.swift */; };
 		FD153DCA1F65866200ED463C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD153DC81F65866200ED463C /* Main.storyboard */; };
 		FD153DCC1F65866200ED463C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD153DCB1F65866200ED463C /* Assets.xcassets */; };
@@ -32,6 +36,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD11EE9D1F6DA0E200A597CF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ../MainViewController.swift; sourceTree = "<group>"; };
+		FD11EEA11F6DA13C00A597CF /* RangingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangingTableViewController.swift; path = ../RangingTableViewController.swift; sourceTree = "<group>"; };
+		FD11EEA31F6DA79C00A597CF /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		FD11EEA71F6DA9D900A597CF /* RangingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangingTableViewCell.swift; path = ../RangingTableViewCell.swift; sourceTree = "<group>"; };
 		FD153DC11F65866200ED463C /* FindMyBike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMyBike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD153DC41F65866200ED463C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD153DC91F65866200ED463C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -89,6 +97,10 @@
 		FD153DC31F65866200ED463C /* FindMyBike */ = {
 			isa = PBXGroup;
 			children = (
+				FD11EEA31F6DA79C00A597CF /* StatusViewController.swift */,
+				FD11EEA11F6DA13C00A597CF /* RangingTableViewController.swift */,
+				FD11EEA71F6DA9D900A597CF /* RangingTableViewCell.swift */,
+				FD11EE9D1F6DA0E200A597CF /* MainViewController.swift */,
 				FD153DC41F65866200ED463C /* AppDelegate.swift */,
 				FD153DC81F65866200ED463C /* Main.storyboard */,
 				FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */,
@@ -225,7 +237,11 @@
 				FD153DE91F65A97A00ED463C /* Bike.swift in Sources */,
 				FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */,
 				FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */,
+				FD11EE9E1F6DA0E200A597CF /* MainViewController.swift in Sources */,
+				FD11EEA41F6DA79C00A597CF /* StatusViewController.swift in Sources */,
 				FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */,
+				FD11EEA21F6DA13C00A597CF /* RangingTableViewController.swift in Sources */,
+				FD11EEA81F6DA9D900A597CF /* RangingTableViewCell.swift in Sources */,
 				FD153DC51F65866200ED463C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

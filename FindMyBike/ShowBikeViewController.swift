@@ -49,9 +49,9 @@ class ShowBikeViewController: AppEventViewController, RangingDelegate {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        if bike != nil {
-            Ranging.sharedInstance.disableRanging()
-        }
+//        if bike != nil {
+//            Ranging.sharedInstance.disableRanging()
+//        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,8 +73,8 @@ class ShowBikeViewController: AppEventViewController, RangingDelegate {
             self.bike = bike
             resetProximityLabel()
 
-            Ranging.sharedInstance.delegate = self
-            Ranging.sharedInstance.enableRanging(for: bike.region)
+//            Ranging.sharedInstance.delegate = self
+//            Ranging.sharedInstance.enableRanging(for: bike.region)
         }
     }
 
@@ -83,14 +83,14 @@ class ShowBikeViewController: AppEventViewController, RangingDelegate {
     override func applicationDidBecomeActive(_ notification: NSNotification!) {
         os_log("applicationDidBecomeActive", log: ShowBikeViewController.log, type: .debug)
 
-        resetProximityLabel()
-        Ranging.sharedInstance.startRanging()
+//        resetProximityLabel()
+//        Ranging.sharedInstance.startRanging()
     }
 
     override func applicationWillResignActive(_ notification: NSNotification!) {
         os_log("applicationWillResignActive", log: ShowBikeViewController.log, type: .debug)
 
-        Ranging.sharedInstance.stopRanging()
+//        Ranging.sharedInstance.stopRanging()
     }
 
     func rangingNotAvailable() {
