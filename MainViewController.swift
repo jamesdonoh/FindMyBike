@@ -10,26 +10,24 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: Properties
 
-        // Do any additional setup after loading the view.
-    }
+    weak var statusViewController: StatusViewController?
+    weak var rangingTableViewController: RangingTableViewController?
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Store references to our child view controllers when embed segue occurs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let statusViewController = segue.destination as? StatusViewController {
+            self.statusViewController = statusViewController
+        } else if let rangingTableViewController = segue.destination as? RangingTableViewController {
+            self.rangingTableViewController = rangingTableViewController
+        }
     }
-    */
 
+    override func viewDidLoad() {
+        let deadlineTime = DispatchTime.now() + .seconds(3)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.rangingTableViewController?.bikes = ["Honda", "Suzuki", "Harley-Davidson"]
+        }
+    }
 }

@@ -13,36 +13,28 @@ import UIKit
 
 class RangingTableViewController: UITableViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: Properties
 
-        // Do any additional setup after loading the view.
+    static let reuseIdentifier = "RangingTableViewCell"
+
+    var bikes = [String]() {
+        didSet {
+            tableView.reloadData()
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+    // MARK: TableView data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return bikes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Table cell views are reused and should be dequeued using a cell identifier
-        let cellIdentifier = "RangingTableViewCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: RangingTableViewController.reuseIdentifier, for: indexPath)
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? RangingTableViewCell else {
-            fatalError("The dequeued call is not an instance of \(cellIdentifier)")
-        }
-
-        cell.nameLabel.text = "Cell \(indexPath.row)"
+        cell.textLabel!.text = bikes[indexPath.row]
+        cell.detailTextLabel!.text = "Far"
+        //cell.imageView = foo
 
         return cell
     }
