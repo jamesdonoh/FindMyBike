@@ -20,6 +20,8 @@
 		FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE61F65964200ED463C /* ShowBikeViewController.swift */; };
 		FD153DE91F65A97A00ED463C /* Bike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE81F65A97A00ED463C /* Bike.swift */; };
 		FD6E7FF21F6E7E13005E8908 /* BikeRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */; };
+		FDD111391F6E89D500D5B0B3 /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD111381F6E89D500D5B0B3 /* Beacon.swift */; };
+		FDD1113B1F6E8E1400D5B0B3 /* ProximityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */; };
 		FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */; };
 		FDE47A381F6D7D05004D0C45 /* Ranging.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A331F6D7D05004D0C45 /* Ranging.swift */; };
 		FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */; };
@@ -54,6 +56,8 @@
 		FD153DE61F65964200ED463C /* ShowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowBikeViewController.swift; sourceTree = "<group>"; };
 		FD153DE81F65A97A00ED463C /* Bike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bike.swift; path = ../../AboutMyBike/AboutMyBike/Bike.swift; sourceTree = "<group>"; };
 		FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeRegistry.swift; sourceTree = "<group>"; };
+		FDD111381F6E89D500D5B0B3 /* Beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beacon.swift; sourceTree = "<group>"; };
+		FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityMonitor.swift; sourceTree = "<group>"; };
 		FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BluetoothSupport.swift; path = ../../BeaconRanger/BeaconRanger/BluetoothSupport.swift; sourceTree = "<group>"; };
 		FDE47A331F6D7D05004D0C45 /* Ranging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ranging.swift; path = ../../BeaconRanger/BeaconRanger/Ranging.swift; sourceTree = "<group>"; };
 		FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertFactory.swift; path = ../../BeaconRanger/BeaconRanger/AlertFactory.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 				FD11EEA11F6DA13C00A597CF /* RangingTableViewController.swift */,
 				FD11EEA71F6DA9D900A597CF /* RangingTableViewCell.swift */,
 				FD11EE9D1F6DA0E200A597CF /* MainViewController.swift */,
+				FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */,
 				FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */,
 				FD153DC41F65866200ED463C /* AppDelegate.swift */,
 				FD153DC81F65866200ED463C /* Main.storyboard */,
@@ -116,6 +121,7 @@
 				FD153DE41F65962700ED463C /* EditBikeViewController.swift */,
 				FD153DE61F65964200ED463C /* ShowBikeViewController.swift */,
 				FD153DE81F65A97A00ED463C /* Bike.swift */,
+				FDD111381F6E89D500D5B0B3 /* Beacon.swift */,
 			);
 			path = FindMyBike;
 			sourceTree = "<group>";
@@ -240,11 +246,13 @@
 				FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */,
 				FD153DE91F65A97A00ED463C /* Bike.swift in Sources */,
 				FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */,
+				FDD1113B1F6E8E1400D5B0B3 /* ProximityMonitor.swift in Sources */,
 				FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */,
 				FD11EE9E1F6DA0E200A597CF /* MainViewController.swift in Sources */,
 				FD11EEA41F6DA79C00A597CF /* StatusViewController.swift in Sources */,
 				FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */,
 				FD11EEA21F6DA13C00A597CF /* RangingTableViewController.swift in Sources */,
+				FDD111391F6E89D500D5B0B3 /* Beacon.swift in Sources */,
 				FD11EEA81F6DA9D900A597CF /* RangingTableViewCell.swift in Sources */,
 				FD153DC51F65866200ED463C /* AppDelegate.swift in Sources */,
 			);

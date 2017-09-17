@@ -7,15 +7,32 @@
 //
 
 import UIKit
+import os.log
 
-class MainViewController: UIViewController {
+class MainViewController: AppEventViewController {
 
     // MARK: Properties
+
+    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: MainViewController.self))
+
+    let bikeRegistry = BikeRegistry()
+
+    let proximityMonitor = ProximityMonitor()
 
     weak var statusViewController: StatusViewController?
     weak var rangingTableViewController: RangingTableViewController?
 
-    let bikeRegistry = BikeRegistry()
+    // MARK: UIViewController
+
+    override func viewDidLoad() {
+        os_log("viewDidLoad", log: log, type: .debug)
+        super.viewDidLoad()
+
+        let deadlineTime = DispatchTime.now() + .seconds(3)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.rangingTableViewController?.missingBikes = self.bikeRegistry.missingBikes
+        }
+    }
 
     // Store references to our child view controllers when embed segue occurs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -26,13 +43,15 @@ class MainViewController: UIViewController {
         }
     }
 
-    override func viewDidLoad() {
-        let deadlineTime = DispatchTime.now() + .seconds(3)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.rangingTableViewController?.missingBikes = self.bikeRegistry.missingBikes
-        }
+    // MARK: AppEventViewController
+
+    override func applicationDidBecomeActive(_ notification: NSNotification!) {
+        os_log("applicationDidBecomeActive", log: log, type: .debug)
     }
 
-    // NOTE TO SELF
-    // Do not waste 2h fiddling around with auto layout. Get more functionality going first then come back to it!
+    override func applicationWillResignActive(_ notification: NSNotification!) {
+        os_log("applicationWillResignActive", log: log, type: .debug)
+    }
+
+    // MARK: Private methods
 }
