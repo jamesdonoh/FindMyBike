@@ -27,7 +27,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         let deadlineTime = DispatchTime.now() + .seconds(3)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.rangingTableViewController?.bikes = ["Honda", "Suzuki", "Harley-Davidson"]
+            self.rangingTableViewController?.bikes = ["Honda", "Yamama", "Triumph"]
         }
     }
+
+    // NOTE TO SELF
+    // Do not waste 2h fiddling around with auto layout. Get more functionality going first then come back to it!
 }
