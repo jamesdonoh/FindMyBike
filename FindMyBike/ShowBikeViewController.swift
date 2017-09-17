@@ -94,7 +94,7 @@ class ShowBikeViewController: AppEventViewController, RangingDelegate {
     }
 
     func rangingNotAvailable() {
-        tryToPresent(AlertFactory.makeRangingNotAvailableAlert())
+        tryToPresent(AlertFactory.makeNoBeaconSupport())
         resetProximityLabel()
     }
 
