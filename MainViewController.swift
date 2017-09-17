@@ -15,6 +15,8 @@ class MainViewController: UIViewController {
     weak var statusViewController: StatusViewController?
     weak var rangingTableViewController: RangingTableViewController?
 
+    let bikeRegistry = BikeRegistry()
+
     // Store references to our child view controllers when embed segue occurs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let statusViewController = segue.destination as? StatusViewController {
@@ -27,7 +29,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         let deadlineTime = DispatchTime.now() + .seconds(3)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.rangingTableViewController?.bikes = ["Honda", "Yamama", "Triumph"]
+            self.rangingTableViewController?.missingBikes = self.bikeRegistry.missingBikes
         }
     }
 

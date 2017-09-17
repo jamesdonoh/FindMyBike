@@ -17,7 +17,7 @@ class RangingTableViewController: UITableViewController {
 
     let reuseIdentifier = "RangingTableViewCell"
 
-    var bikes = [String]() {
+    var missingBikes = [Bike]() {
         didSet {
             tableView.reloadData()
         }
@@ -26,7 +26,7 @@ class RangingTableViewController: UITableViewController {
     // MARK: TableView data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bikes.count
+        return missingBikes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -34,9 +34,10 @@ class RangingTableViewController: UITableViewController {
             fatalError("The dequeued call is not an instance of \(reuseIdentifier)")
         }
 
-        cell.titleLabel.text = bikes[indexPath.row]
+        let missingBike = missingBikes[indexPath.row]
+        cell.titleLabel.text = missingBike.makeAndModel
         cell.subtitleLabel.text = "Far"
-        cell.photoImageView.image = UIImage(named: "bike" + String(indexPath.row + 1))
+        cell.photoImageView.image = missingBike.photo
 
         return cell
     }
@@ -44,7 +45,7 @@ class RangingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         var title: String?
 
-        if bikes.count > 0 {
+        if missingBikes.count > 0 {
             title = "Missing bikes nearby"
             tableView.separatorStyle = .singleLine
         } else {
@@ -53,15 +54,5 @@ class RangingTableViewController: UITableViewController {
         }
 
         return title
-    }
-
-    // MARK: Private methods
-
-    private func updateBackround() {
-        if bikes.count > 0 {
-            tableView.backgroundView = nil
-        } else {
-            tableView.backgroundView = UILabel()
-        }
     }
 }
