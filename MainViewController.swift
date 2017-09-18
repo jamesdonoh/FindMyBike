@@ -53,6 +53,9 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
 
     override func applicationWillResignActive(_ notification: NSNotification!) {
         os_log("applicationWillResignActive", log: log, type: .debug)
+
+        // Notify ProximityMonitor to stop foreground activities such as ranging, as per Apple advice
+        proximityMonitor.deactivate()
     }
 
     // MARK: ProximityMonitorDelegate
@@ -65,10 +68,10 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
         }
     }
 
-    func didRangeBeacons(minors: [UInt16]) {
-        let missingBikes = bikeRegistry.lookup(by: minors)
+    func didRangeBeacons(beacons: [(minor: UInt16, proximity: String)]) {
+        let missingItems = bikeRegistry.findMissing(beacons: beacons)
 
-        rangingTableViewController?.missingBikes = missingBikes
+        rangingTableViewController?.missingItems = missingItems
     }
 
     // MARK: Private methods

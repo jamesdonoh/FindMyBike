@@ -17,7 +17,7 @@ class RangingTableViewController: UITableViewController {
 
     let reuseIdentifier = "RangingTableViewCell"
 
-    var missingBikes = [Bike]() {
+    var missingItems = [(bike: Bike, proximity: String)]() {
         didSet {
             tableView.reloadData()
         }
@@ -26,7 +26,7 @@ class RangingTableViewController: UITableViewController {
     // MARK: TableView data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return missingBikes.count
+        return missingItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -34,10 +34,10 @@ class RangingTableViewController: UITableViewController {
             fatalError("The dequeued call is not an instance of \(reuseIdentifier)")
         }
 
-        let missingBike = missingBikes[indexPath.row]
-        cell.titleLabel.text = missingBike.makeAndModel
-        cell.subtitleLabel.text = "Far"
-        cell.photoImageView.image = missingBike.photo
+        let missingItem = missingItems[indexPath.row]
+        cell.titleLabel.text = missingItem.bike.makeAndModel
+        cell.subtitleLabel.text = missingItem.proximity
+        cell.photoImageView.image = missingItem.bike.photo
 
         return cell
     }
@@ -45,7 +45,7 @@ class RangingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         var title: String?
 
-        if missingBikes.count > 0 {
+        if missingItems.count > 0 {
             title = "Missing bikes nearby"
             tableView.separatorStyle = .singleLine
         } else {

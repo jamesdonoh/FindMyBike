@@ -12,17 +12,24 @@ class BikeRegistry {
 
     // MARK: Properties
 
-    private var exampleBikes = [
-        Bike(make: "Honda", model: "CBR1000RR", beaconMinor: 1, photo: UIImage(named: "bike1")),
-        Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 2, photo: UIImage(named: "bike2")),
-        Bike(make: "Triumph", model: "Speed Triple R", beaconMinor: 3, photo: UIImage(named: "bike3")),
+    var missingBikes: [UInt16: Bike] = [
+        1: Bike(make: "Honda", model: "CBR1000RR", beaconMinor: 1, photo: UIImage(named: "bike1")),
+        2: Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 2, photo: UIImage(named: "bike2")),
+        3: Bike(make: "Triumph", model: "Speed Triple R", beaconMinor: 3, photo: UIImage(named: "bike3"))
     ]
 
     // MARK: Public methods
 
-    // This could be replaced with a more efficient implementation using a [UInt16: Bike]
-    // Dictionary and the new 'filter' method
-    func lookup(by minors: [UInt16]) -> [Bike] {
-        return exampleBikes.filter { minors.contains($0.beaconMinor) }
+    func findMissing(beacons: [(minor: UInt16, proximity: String)]) -> [(bike: Bike, proximity: String)] {
+        // TODO make this more elegant using map/filter?
+        var missing = [(bike: Bike, proximity: String)]()
+
+        for beacon in beacons {
+            if let bike = missingBikes[beacon.minor] {
+                missing.append(bike: bike, proximity: beacon.proximity)
+            }
+        }
+
+        return missing
     }
 }
