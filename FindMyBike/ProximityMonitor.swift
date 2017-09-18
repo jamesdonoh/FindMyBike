@@ -11,6 +11,7 @@ import os.log
 
 protocol ProximityMonitorDelegate: class {
     func noDeviceBeaconSupport()
+    func didRangeBeacons(minors: [UInt16])
 }
 
 class ProximityMonitor: NSObject, CLLocationManagerDelegate {
@@ -27,19 +28,12 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
         return CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) && CLLocationManager.isRangingAvailable()
     }
 
-    // MARK: Initialisation
-
-    override init() {
-        os_log("init", log: log, type: .debug)
-        super.init()
-
-        locationManager.delegate = self
-    }
-
     // MARK: Public interface
 
     func activate() {
         os_log("activate", log: log, type: .info)
+
+        sendTestData()
 
         guard deviceSupportsBeacons else {
             os_log("Device does not support beacon monitoring/ranging", log: log, type: .error)
@@ -47,11 +41,21 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
             return
         }
 
+        locationManager.delegate = self
+
         // If authorisation status is notDetermined this will request permission, otherwise is no-op
         locationManager.requestAlwaysAuthorization()
     }
 
+    func sendTestData() {
+        let deadlineTime = DispatchTime.now() + .seconds(3)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.delegate?.didRangeBeacons(minors: [1, 2, 3])
+        }
+    }
+
     // MARK: CLLocationManagerDelegate
+    // NB these methods should not get called if initialisation exited early due to no beacon suppport
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         os_log("didChangeAuthorisationStatus: %@", log: log, type: .info, status.description)
@@ -80,6 +84,14 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         os_log("didRangeBeacons: %lu beacons in region %@", log: log, type: .info, beacons.count, region.identifier)
+
+        guard region == Beacon.region else {
+            os_log("Ignoring unexpected region: %@", log: log, type: .error)
+            return
+        }
+
+        let beaconMinors = beacons.map { UInt16($0.minor) }
+        delegate?.didRangeBeacons(minors: beaconMinors)
     }
 
     func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
@@ -89,7 +101,9 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
     // MARK: Private methods
 
     private func startMonitoring() {
-        //
+        os_log("startMonitoring", log: log, type: .error)
+
+        locationManager.startMonitoring(for: Beacon.region)
     }
 
     // Helper method to debug issues with location/ranging availability

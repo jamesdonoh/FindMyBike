@@ -31,14 +31,9 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
 
         proximityMonitor.delegate = self
         proximityMonitor.activate()
-
-        let deadlineTime = DispatchTime.now() + .seconds(3)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.rangingTableViewController?.missingBikes = self.bikeRegistry.missingBikes
-        }
     }
 
-    // Store references to our child view controllers when embed segue occurs
+    // Store references to  child view controllers when embed segue occurs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let statusViewController = segue.destination as? StatusViewController {
             self.statusViewController = statusViewController
@@ -52,7 +47,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
     override func applicationDidBecomeActive(_ notification: NSNotification!) {
         os_log("applicationDidBecomeActive", log: log, type: .debug)
 
-        // May be coming back from Settings app, so give another chance to enable location services
+        // May be coming back from Settings app, so another chance to enable location services
         proximityMonitor.activate()
     }
 
@@ -68,6 +63,12 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
             tryToPresent(AlertFactory.makeNoBeaconSupport())
             haveAlertedNoBeaconSupport = true
         }
+    }
+
+    func didRangeBeacons(minors: [UInt16]) {
+        let missingBikes = bikeRegistry.lookup(by: minors)
+
+        rangingTableViewController?.missingBikes = missingBikes
     }
 
     // MARK: Private methods
