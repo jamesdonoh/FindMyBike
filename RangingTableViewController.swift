@@ -10,23 +10,33 @@
 //
 
 import UIKit
+import os.log
 
 class RangingTableViewController: UITableViewController {
 
     // MARK: Properties
 
+    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RangingTableViewController.self))
+
     let reuseIdentifier = "RangingTableViewCell"
 
-    var missingItems = [(bike: Bike, proximity: String)]() {
+    var missingBikes = [(bike: Bike, proximity: String)]() {
         didSet {
             tableView.reloadData()
         }
     }
 
+    weak var myBike: Bike?
+    var myBikeProximity: String?
+
     // MARK: TableView data source
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return myBike != nil ? 2 : 1
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return missingItems.count
+        return myBike != nil && section == 0 ? 1 : missingBikes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -34,25 +44,35 @@ class RangingTableViewController: UITableViewController {
             fatalError("The dequeued call is not an instance of \(reuseIdentifier)")
         }
 
-        let missingItem = missingItems[indexPath.row]
-        cell.titleLabel.text = missingItem.bike.makeAndModel
-        cell.subtitleLabel.text = missingItem.proximity
-        cell.photoImageView.image = missingItem.bike.photo
+        var bike: (bike: Bike, proximity: String)
+        if myBike != nil && indexPath.section == 0 {
+            bike = (bike: myBike!, proximity: myBikeProximity ?? "Not in range")
+        } else {
+            bike = missingBikes[indexPath.row]
+        }
+
+        cell.titleLabel.text = bike.bike.makeAndModel
+        cell.subtitleLabel.text = bike.proximity
+        cell.photoImageView.image = bike.bike.photo
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var title: String?
-
-        if missingItems.count > 0 {
-            title = "Missing bikes nearby"
-            tableView.separatorStyle = .singleLine
+        if myBike != nil && section == 0 {
+            return "Your bike"
         } else {
-            title = "No bikes in range"
-            tableView.separatorStyle = .none
-        }
+            var title: String?
 
-        return title
+            if missingBikes.count > 0 {
+                title = "Missing bikes nearby"
+                tableView.separatorStyle = .singleLine
+            } else {
+                title = "No missing bikes nearby"
+                tableView.separatorStyle = .none
+            }
+            
+            return title
+        }
     }
 }

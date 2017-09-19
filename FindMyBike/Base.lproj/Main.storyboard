@@ -25,28 +25,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8dA-EY-yjr">
-                                <rect key="frame" x="16" y="84" width="343" height="520.5"/>
+                                <rect key="frame" x="16" y="84" width="343" height="575"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgu-d6-eDr">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="am5-s5-xKz">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGY-US-40g" userLabel="Status Container View">
-                                        <rect key="frame" x="0.0" y="20.5" width="343" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="HLn-Vf-sjS"/>
-                                        </constraints>
-                                        <connections>
-                                            <segue destination="PK8-vz-MK8" kind="embed" id="K7d-CW-0Hk"/>
-                                        </connections>
-                                    </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Th8-LK-ufO" userLabel="Ranging Container View">
-                                        <rect key="frame" x="0.0" y="120.5" width="343" height="400"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="400" id="iu3-Tq-vS6"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="575"/>
                                         <connections>
                                             <segue destination="FXJ-kD-ylQ" kind="embed" id="adk-3z-glX"/>
                                         </connections>
@@ -56,12 +44,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="8dA-EY-yjr" secondAttribute="trailing" id="STb-iX-0xk"/>
-                            <constraint firstItem="8dA-EY-yjr" firstAttribute="leading" secondItem="CAy-X8-PdN" secondAttribute="leadingMargin" id="fug-gq-RPp"/>
-                            <constraint firstItem="8dA-EY-yjr" firstAttribute="top" secondItem="cLX-q1-9lw" secondAttribute="bottom" constant="20" id="xpd-tU-WJH"/>
+                            <constraint firstItem="8dA-EY-yjr" firstAttribute="trailing" secondItem="CAy-X8-PdN" secondAttribute="trailingMargin" id="INh-8p-lme"/>
+                            <constraint firstItem="8dA-EY-yjr" firstAttribute="leading" secondItem="CAy-X8-PdN" secondAttribute="leadingMargin" id="qZD-pT-qaL"/>
+                            <constraint firstItem="8dA-EY-yjr" firstAttribute="top" secondItem="cLX-q1-9lw" secondAttribute="bottom" constant="20" id="swz-D9-r1W"/>
+                            <constraint firstItem="O3G-vv-uar" firstAttribute="top" secondItem="8dA-EY-yjr" secondAttribute="bottom" constant="8" id="zEh-II-trP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="FindMyBike" id="2Kh-B8-i50"/>
+                    <connections>
+                        <outlet property="statusMessageLabel" destination="am5-s5-xKz" id="VJg-Y3-LzS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="57U-ej-X2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -235,39 +227,12 @@
             </objects>
             <point key="canvasLocation" x="2122" y="104"/>
         </scene>
-        <!--Status View Controller-->
-        <scene sceneID="M9g-Su-3oJ">
-            <objects>
-                <viewController id="PK8-vz-MK8" customClass="StatusViewController" customModule="FindMyBike" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="W3I-O1-wDB"/>
-                        <viewControllerLayoutGuide type="bottom" id="KqM-G5-5wQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="By1-nw-Oce">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Everything OK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJ9-sz-9j8">
-                                <rect key="frame" x="0.0" y="0.0" width="110" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CpU-Gn-UCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2888.8000000000002" y="-906.74662668665678"/>
-        </scene>
         <!--Ranging Table View Controller-->
         <scene sceneID="iQd-h4-OkP">
             <objects>
                 <tableViewController id="FXJ-kD-ylQ" userLabel="Ranging Table View Controller" customClass="RangingTableViewController" customModule="FindMyBike" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="au1-r6-GN8">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="575"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>

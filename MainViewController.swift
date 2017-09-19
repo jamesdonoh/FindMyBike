@@ -20,7 +20,8 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
 
     var haveAlertedNoBeaconSupport = false
 
-    weak var statusViewController: StatusViewController?
+    @IBOutlet weak var statusMessageLabel: UILabel!
+    
     weak var rangingTableViewController: RangingTableViewController?
 
     // MARK: UIViewController
@@ -29,15 +30,17 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
         os_log("viewDidLoad", log: log, type: .debug)
         super.viewDidLoad()
 
+        //statusMessageLabel.text = "Scanning..."
+        statusMessageLabel.text = nil
+
         proximityMonitor.delegate = self
         proximityMonitor.activate()
     }
 
     // Store references to  child view controllers when embed segue occurs
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let statusViewController = segue.destination as? StatusViewController {
-            self.statusViewController = statusViewController
-        } else if let rangingTableViewController = segue.destination as? RangingTableViewController {
+        if let rangingTableViewController = segue.destination as? RangingTableViewController {
+            rangingTableViewController.myBike = bikeRegistry.myBike
             self.rangingTableViewController = rangingTableViewController
         }
     }
@@ -69,9 +72,11 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
     }
 
     func didRangeBeacons(beacons: [(minor: UInt16, proximity: String)]) {
-        let missingItems = bikeRegistry.findMissing(beacons: beacons)
+        let myBikeProximity = bikeRegistry.findMyBikeProximity(beacons: beacons)
+        rangingTableViewController?.myBikeProximity = myBikeProximity
 
-        rangingTableViewController?.missingItems = missingItems
+        let missingBikes = bikeRegistry.findMissingBikes(beacons: beacons)
+        rangingTableViewController?.missingBikes = missingBikes
     }
 
     // MARK: Private methods
