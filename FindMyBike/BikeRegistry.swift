@@ -12,11 +12,11 @@ class BikeRegistry {
 
     // MARK: Properties
 
-    var myBike = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 2, photo: UIImage(named: "bike2"))
+    var myBike = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
 
     var missingBikes: [UInt16: Bike] = [
         1: Bike(make: "Honda", model: "CBR1000RR", beaconMinor: 1, photo: UIImage(named: "bike1")),
-        3: Bike(make: "Triumph", model: "Speed Triple R", beaconMinor: 3, photo: UIImage(named: "bike3"))
+        3: Bike(make: "Triumph", model: "Speed Triple R", beaconMinor: 2, photo: UIImage(named: "bike3"))
     ]
 
     // MARK: Public methods
@@ -42,6 +42,8 @@ class BikeRegistry {
             }
         }
 
-        return missing
+        // TODO make Bike implement Comparable protocol to preseve inherent order instead
+        // https://developer.apple.com/documentation/swift/comparable
+        return missing.sorted(by: { $0.bike.makeAndModel > $1.bike.makeAndModel })
     }
 }

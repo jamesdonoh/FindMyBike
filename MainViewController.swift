@@ -21,6 +21,8 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
 
     var haveAlertedNoBeaconSupport = false
 
+    var haveNotifiedMissingBikesInRange = false
+
     @IBOutlet weak var statusMessageLabel: UILabel!
     
     weak var rangingTableViewController: RangingTableViewController?
@@ -58,8 +60,10 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
     override func applicationWillResignActive(_ notification: NSNotification!) {
         os_log("applicationWillResignActive", log: log, type: .debug)
 
-        // Notify ProximityMonitor to stop foreground activities such as ranging, as per Apple advice
+        // Allow ProximityMonitor to take action before going to background
         proximityMonitor.deactivate()
+
+        haveNotifiedMissingBikesInRange = false
     }
 
     // MARK: ProximityMonitorDelegate
@@ -73,15 +77,28 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
     }
 
     func didRangeBeacons(beacons: [(minor: UInt16, proximity: String)]) {
-        let myBikeProximity = bikeRegistry.findMyBikeProximity(beacons: beacons)
-        rangingTableViewController?.myBikeProximity = myBikeProximity
-
         let missingBikes = bikeRegistry.findMissingBikes(beacons: beacons)
-        rangingTableViewController?.missingBikes = missingBikes
 
-        if missingBikes.count > 0 {
-            notifications.send(message: "Missing bikes detected nearby")
+        switch UIApplication.shared.applicationState {
+        case .active, .inactive:
+            let myBikeProximity = bikeRegistry.findMyBikeProximity(beacons: beacons)
+
+            rangingTableViewController?.myBikeProximity = myBikeProximity
+            rangingTableViewController?.missingBikes = missingBikes
+        case .background:
+            if missingBikes.count > 0 && !haveNotifiedMissingBikesInRange {
+                notifications.send(message: "Missing bikes detected nearby")
+
+                // Avoid sending repeated notifications
+                haveNotifiedMissingBikesInRange = true
+            }
         }
+    }
+
+    func monitoringFailure() {
+        // Something bad happened while monitoring, so any region data may be invalid
+        rangingTableViewController?.myBikeProximity = nil
+        rangingTableViewController?.missingBikes = []
     }
 
     // MARK: Private methods

@@ -12,15 +12,17 @@ import os.log
 protocol ProximityMonitorDelegate: class {
     func noDeviceBeaconSupport()
     func didRangeBeacons(beacons: [(minor: UInt16, proximity: String)])
+    func monitoringFailure()
 }
 
-class ProximityMonitor: NSObject, CLLocationManagerDelegate {
+class ProximityMonitor: NSObject, CLLocationManagerDelegate, BluetoothDelegate {
 
     // MARK: Properties
 
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: ProximityMonitor.self))
 
     let locationManager = CLLocationManager()
+    let bluetoothSupport = BluetoothSupport()
 
     weak var delegate: ProximityMonitorDelegate?
 
@@ -34,6 +36,7 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
         super.init()
 
         locationManager.delegate = self
+        bluetoothSupport.delegate = self
     }
 
     // MARK: Public interface
@@ -50,39 +53,30 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
         // If authorisation status is notDetermined this will request permission, otherwise is no-op
         locationManager.requestAlwaysAuthorization()
 
-        // If already authorised and we are returning to the foreground, resume ranging
-//        if isAuthorised {
-//            startRanging()
-//        }
-
+        // We may be already authorised and returning to the foreground
+        if isAuthorised {
+            checkRegionState()
+        }
     }
 
     func deactivate() {
         os_log("deactivate", log: log, type: .debug)
 
-        // Note: ranging must be stopped but monitoring can continue in the background
-        //stopRanging()
+        // Before going to background check region state - avoids ranging in background if not in region
+        if isAuthorised {
+            checkRegionState()
+        }
     }
 
-//    func sendTestData() {
-//        let deadlineTime = DispatchTime.now() + .seconds(3)
-//        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-//            self.delegate?.didRangeBeacons(minors: [1, 2, 3])
-//        }
-//    }
-
     // MARK: CLLocationManagerDelegate
-    // NB these methods should not get called if initialisation exited early due to no beacon suppport
+    // NB methods should not get called if initialisation exited early due to no beacon suppport
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         os_log("didChangeAuthorisationStatus: %@", log: log, type: .info, status.description)
 
-        // NB  may get this event before application comes back to the foreground so do not range yet
+        // NB we may get this event before application comes back to the foreground
         if isAuthorised {
             startMonitoring()
-
-            // If we are already in the region we will not receive didEnterRegion, so check
-            locationManager.requestState(for: Beacon.region)
         }
     }
 
@@ -103,11 +97,14 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
 
         if state == .inside {
             startRanging()
+        } else if state == .outside {
+            stopRanging()
         }
     }
 
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
         os_log("monitoringDidFailFor: %@", log: log, type: .error, error.localizedDescription)
+        delegate?.monitoringFailure()
     }
 
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
@@ -125,6 +122,17 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
         os_log("rangingBeaconsDidFailFor: %@", log: log, type: .error, error.localizedDescription)
+        delegate?.monitoringFailure()
+    }
+
+    // MARK: BluetoothDelagate
+
+    func bluetoothAvailable() {
+        os_log("bluetoothAvailable", log: log, type: .debug)
+    }
+
+    func bluetoothNotAvailable() {
+        os_log("bluetoothNotAvailable", log: log, type: .debug)
     }
 
     // MARK: Private properties
@@ -164,73 +172,7 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    // Helper method to debug issues with location/ranging availability
-    private func logAvailabilityInfo() {
-        // Notes on user flow
-        //
-        // First run, all location services turned off
-        // - Shows "Turn On Location Services" prompt automatically
-        // - didChangeAuthorisationStatus: denied
-        // If user enables location services changes to:
-        // - didChangeAuthorisationStatus: notDetermined
-        // So need to request again when app comes back to foreground!
-        //
-        //
-
-        // Returns false if the user has disabled location services globally
-        // However if this is the case the system will automatically prompt the user to turn it on, so we can ignore
-        os_log("locationServicesEnabled = %@", log: log, type: .debug, CLLocationManager.locationServicesEnabled() ? "true" : "false")
-
-        // The following two flags describe device capabilities - e.g. they may true on a real device
-        // even if Bluetooth is currently switched. They always return false on an iPhone simulator
-        os_log("isMonitoringAvailable(Beacon) = %@", log: log, type: .debug, CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) ? "true" : "false")
-        os_log("isRangingAvailable = %@", log: log, type: .debug, CLLocationManager.isRangingAvailable() ? "true" : "false")
-    }
-}
-
-// Use extension to add a human-readable versions of status/proxmity info
-
-extension CLAuthorizationStatus {
-    var description: String {
-        switch self {
-        case .authorizedWhenInUse:
-            return "authorizedWhenInUse"
-        case .authorizedAlways:
-            return "authorizedAlways"
-        case .notDetermined:
-            return "notDetermined"
-        case .restricted:
-            return "restricted"
-        case .denied:
-            return "denied"
-        }
-    }
-}
-
-extension CLProximity {
-    var description: String {
-        switch self {
-        case .unknown:
-            return "Unknown"
-        case .immediate:
-            return "Immediate"
-        case .near:
-            return "Near"
-        case .far:
-            return "Far"
-        }
-    }
-}
-
-extension CLRegionState {
-    var description: String {
-        switch self {
-        case .unknown:
-            return "unknown"
-        case .inside:
-            return "inside"
-        case .outside:
-            return "outside"
-        }
+    private func checkRegionState() {
+        locationManager.requestState(for: Beacon.region)
     }
 }

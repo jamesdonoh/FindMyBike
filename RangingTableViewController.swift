@@ -68,7 +68,7 @@ class RangingTableViewController: UITableViewController {
                 title = "Missing bikes nearby"
                 tableView.separatorStyle = .singleLine
             } else {
-                title = "No missing bikes nearby"
+                title = "No missing bikes detected"
                 tableView.separatorStyle = .none
             }
             
