@@ -51,16 +51,17 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
         locationManager.requestAlwaysAuthorization()
 
         // If already authorised and we are returning to the foreground, resume ranging
-        if isAuthorised {
-            startRanging()
-        }
+//        if isAuthorised {
+//            startRanging()
+//        }
+
     }
 
     func deactivate() {
         os_log("deactivate", log: log, type: .debug)
 
         // Note: ranging must be stopped but monitoring can continue in the background
-        stopRanging()
+        //stopRanging()
     }
 
 //    func sendTestData() {
@@ -79,15 +80,30 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
         // NB  may get this event before application comes back to the foreground so do not range yet
         if isAuthorised {
             startMonitoring()
+
+            // If we are already in the region we will not receive didEnterRegion, so check
+            locationManager.requestState(for: Beacon.region)
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         os_log("didEnterRegion: %@", log: log, type: .info, region.identifier)
+
+        startRanging()
     }
 
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         os_log("didExitRegion: %@", log: log, type: .info, region.identifier)
+
+        stopRanging()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        os_log("didDetermineState: %@", log: log, type: .info, state.description)
+
+        if state == .inside {
+            startRanging()
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
@@ -97,7 +113,7 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         os_log("didRangeBeacons: %lu beacons", log: log, type: .info, beacons.count)
 
-        guard region == Beacon.region else {
+        guard region.identifier == Beacon.region.identifier else {
             os_log("Ignoring unexpected region: %@", log: log, type: .error)
             return
         }
@@ -118,11 +134,11 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate {
     }
 
     private var isMonitoring: Bool {
-        return locationManager.monitoredRegions.contains(Beacon.region)
+        return locationManager.monitoredRegions.map { $0.identifier }.contains(Beacon.region.identifier)
     }
 
     private var isRanging: Bool {
-        return locationManager.rangedRegions.contains(Beacon.region)
+        return locationManager.rangedRegions.map { $0.identifier }.contains(Beacon.region.identifier)
     }
 
     // MARK: Private methods
@@ -202,6 +218,19 @@ extension CLProximity {
             return "Near"
         case .far:
             return "Far"
+        }
+    }
+}
+
+extension CLRegionState {
+    var description: String {
+        switch self {
+        case .unknown:
+            return "unknown"
+        case .inside:
+            return "inside"
+        case .outside:
+            return "outside"
         }
     }
 }

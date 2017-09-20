@@ -17,6 +17,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
 
     let bikeRegistry = BikeRegistry()
     let proximityMonitor = ProximityMonitor()
+    let notifications = Notifications()
 
     var haveAlertedNoBeaconSupport = false
 
@@ -77,6 +78,10 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
 
         let missingBikes = bikeRegistry.findMissingBikes(beacons: beacons)
         rangingTableViewController?.missingBikes = missingBikes
+
+        if missingBikes.count > 0 {
+            notifications.send(message: "Missing bikes detected nearby")
+        }
     }
 
     // MARK: Private methods
