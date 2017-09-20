@@ -12,7 +12,9 @@ class BikeRegistry {
 
     // MARK: Properties
 
-    var myBike = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
+    var myBike: Bike?
+
+    var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
 
     var missingBikes: [UInt16: Bike] = [
         1: Bike(make: "Honda", model: "CBR1000RR", beaconMinor: 1, photo: UIImage(named: "bike1")),
@@ -24,7 +26,7 @@ class BikeRegistry {
     // TODO make these more elegant using map/filter?
     func findMyBikeProximity(beacons: [(minor: UInt16, proximity: String)]) -> String? {
         for beacon in beacons {
-            if beacon.minor == myBike.beaconMinor {
+            if beacon.minor == myBike?.beaconMinor {
                 return beacon.proximity
             }
         }

@@ -32,11 +32,11 @@ class RangingTableViewController: UITableViewController {
     // MARK: TableView data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return myBike != nil ? 2 : 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myBike != nil && section == 0 ? 1 : missingBikes.count
+        return section == 0 ? 1 : missingBikes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,8 +44,17 @@ class RangingTableViewController: UITableViewController {
             fatalError("The dequeued call is not an instance of \(reuseIdentifier)")
         }
 
+        //TODO simplify/restructure this
+        if indexPath.section == 0 && myBike == nil {
+            cell.titleLabel.text = "No bike configured"
+            cell.subtitleLabel.text = "Tap to edit"
+            cell.photoImageView.image = UIImage(named: "NoBikeIcon")
+
+            return cell
+        }
+
         var bike: (bike: Bike, proximity: String)
-        if myBike != nil && indexPath.section == 0 {
+        if indexPath.section == 0 && myBike != nil {
             bike = (bike: myBike!, proximity: myBikeProximity ?? "Not in range")
         } else {
             bike = missingBikes[indexPath.row]
@@ -59,8 +68,8 @@ class RangingTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if myBike != nil && section == 0 {
-            return "Your bike"
+        if section == 0 {
+            return "My bike"
         } else {
             var title: String?
 
