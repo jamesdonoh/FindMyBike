@@ -26,8 +26,50 @@ class RangingTableViewController: UITableViewController {
         }
     }
 
-    weak var myBike: Bike?
+    weak var myBike: Bike? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
     var myBikeProximity: String?
+
+    // MARK: Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+
+        guard let selectedBikeCell = sender as? RangingTableViewCell else {
+            fatalError("Unexpected sender: \(sender!)")
+        }
+
+        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
+        }
+
+        guard let indexPath = tableView.indexPath(for: selectedBikeCell) else {
+            fatalError("Selected cell is not displayed")
+        }
+
+        os_log("preparing to editBike: %@", log: log, type: .debug, indexPath.description)
+
+        if indexPath.section == 0 {
+            // My bike cell was tapped
+
+            // Dummy data for testing
+            editBikeViewController.bike = BikeRegistry().r1
+        } else {
+            // TODO handle tapping other rows
+        }
+    }
+
+    @IBAction func unwindToRangingTable(sender: UIStoryboardSegue) {
+        os_log("unwindToRangingTable", log: log, type: .debug)
+
+        if let sourceViewController = sender.source as? EditBikeViewController, let bike = sourceViewController.bike {
+            self.myBike = bike
+        }
+    }
 
     // MARK: TableView data source
 

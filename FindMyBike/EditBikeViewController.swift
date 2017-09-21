@@ -60,7 +60,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        assert(segue.identifier == EditBikeViewController.saveBikeSegueIdentifier)
+        //assert(segue.identifier == EditBikeViewController.saveBikeSegueIdentifier)
 
         super.prepare(for: segue, sender: sender)
 
@@ -69,7 +69,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        assert(identifier == EditBikeViewController.saveBikeSegueIdentifier)
+        //assert(identifier == EditBikeViewController.saveBikeSegueIdentifier)
 
         do {
             try validatedBike = createBike()
