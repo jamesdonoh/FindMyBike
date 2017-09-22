@@ -12,9 +12,15 @@
 import UIKit
 import os.log
 
+protocol BikeChangeDelegate: class {
+    func myBikeChanged(newBike: Bike?)
+}
+
 class RangingTableViewController: UITableViewController {
 
     // MARK: Properties
+
+    static let editBikeSegueIdentifier = "editBike"
 
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RangingTableViewController.self))
 
@@ -32,6 +38,8 @@ class RangingTableViewController: UITableViewController {
         }
     }
 
+    weak var delegate: BikeChangeDelegate?
+
     var myBikeProximity: String?
 
     // MARK: Navigation
@@ -39,28 +47,11 @@ class RangingTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
 
-        guard let selectedBikeCell = sender as? RangingTableViewCell else {
-            fatalError("Unexpected sender: \(sender!)")
+        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
         }
 
-//        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
-//            fatalError("Unexpected destination: \(segue.destination)")
-//        }
-
-        guard let indexPath = tableView.indexPath(for: selectedBikeCell) else {
-            fatalError("Selected cell is not displayed")
-        }
-
-        os_log("preparing to editBike: %@", log: log, type: .debug, indexPath.description)
-
-        if indexPath.section == 0 {
-            // My bike cell was tapped
-
-            // Dummy data for testing
-            //editBikeViewController.bike = BikeRegistry.r1
-        } else {
-            // TODO handle tapping other rows
-        }
+        editBikeViewController.bike = myBike
     }
 
     @IBAction func unwindToRangingTable(sender: UIStoryboardSegue) {
@@ -68,6 +59,9 @@ class RangingTableViewController: UITableViewController {
 
         if let sourceViewController = sender.source as? EditBikeViewController, let bike = sourceViewController.bike {
             self.myBike = bike
+
+            // Propagate bike change to parent for persistence (we only have weak ref)
+            delegate?.myBikeChanged(newBike: myBike)
         }
     }
 
@@ -124,6 +118,17 @@ class RangingTableViewController: UITableViewController {
             }
             
             return title
+        }
+    }
+
+    // MARK: UITableViewController
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            performSegue(withIdentifier: RangingTableViewController.editBikeSegueIdentifier, sender: self)
+        default:
+            os_log("selected other row", log: log, type: .debug)
         }
     }
 }

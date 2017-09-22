@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class MainViewController: AppEventViewController, ProximityMonitorDelegate {
+class MainViewController: AppEventViewController, ProximityMonitorDelegate, BikeChangeDelegate {
 
     // MARK: Properties
 
@@ -44,6 +44,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let rangingTableViewController = segue.destination as? RangingTableViewController {
             rangingTableViewController.myBike = bikeRegistry.myBike
+            rangingTableViewController.delegate = self
             self.rangingTableViewController = rangingTableViewController
         }
     }
@@ -99,6 +100,12 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate {
         // Something bad happened while monitoring, so any region data may be invalid
         rangingTableViewController?.myBikeProximity = nil
         rangingTableViewController?.missingBikes = []
+    }
+
+    // MARK: BikeChangeDelegate
+
+    func myBikeChanged(newBike: Bike?) {
+        bikeRegistry.myBike = newBike
     }
 
     // MARK: Private methods
