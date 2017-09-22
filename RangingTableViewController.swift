@@ -43,9 +43,9 @@ class RangingTableViewController: UITableViewController {
             fatalError("Unexpected sender: \(sender!)")
         }
 
-        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
-            fatalError("Unexpected destination: \(segue.destination)")
-        }
+//        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
+//            fatalError("Unexpected destination: \(segue.destination)")
+//        }
 
         guard let indexPath = tableView.indexPath(for: selectedBikeCell) else {
             fatalError("Selected cell is not displayed")
@@ -57,7 +57,7 @@ class RangingTableViewController: UITableViewController {
             // My bike cell was tapped
 
             // Dummy data for testing
-            editBikeViewController.bike = BikeRegistry().r1
+            //editBikeViewController.bike = BikeRegistry.r1
         } else {
             // TODO handle tapping other rows
         }

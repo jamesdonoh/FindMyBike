@@ -71,7 +71,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-hZ-KGD" userLabel="Outer Stack View">
-                                <rect key="frame" x="16" y="20" width="311" height="450"/>
+                                <rect key="frame" x="16" y="20" width="311" height="488"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Make" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="034-Q9-95H">
                                         <rect key="frame" x="0.0" y="0.0" width="311" height="30"/>
@@ -113,18 +113,29 @@
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2q5-4G-S7J">
                                         <rect key="frame" x="0.0" y="152" width="311" height="30"/>
+                                        <gestureRecognizers/>
                                         <state key="normal" title="Choose photo"/>
                                         <connections>
                                             <action selector="choosePhoto" destination="Pnl-85-LtG" eventType="touchUpInside" id="hmN-LZ-w15"/>
                                         </connections>
                                     </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wh2-WZ-ezS" userLabel="Use test data">
+                                        <rect key="frame" x="0.0" y="190" width="311" height="30"/>
+                                        <state key="normal" title="Test data">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadTestData:" destination="Pnl-85-LtG" eventType="touchUpInside" id="UZs-gx-JWc"/>
+                                        </connections>
+                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="260" translatesAutoresizingMaskIntoConstraints="NO" id="XBR-VA-x7b" userLabel="Bike Image View">
-                                        <rect key="frame" x="0.0" y="190" width="311" height="260"/>
+                                        <rect key="frame" x="0.0" y="228" width="311" height="260"/>
                                     </imageView>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="5Hx-hZ-KGD" firstAttribute="top" secondItem="8hk-US-aqW" secondAttribute="bottom" constant="20" id="bxv-Bt-oyk"/>
                             <constraint firstItem="7fi-Ld-Ub6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="XBR-VA-x7b" secondAttribute="bottom" constant="8" id="fht-vF-kXr"/>
@@ -151,6 +162,7 @@
                         <outlet property="makeTextField" destination="034-Q9-95H" id="jRl-i4-70X"/>
                         <outlet property="modelTextField" destination="4to-Ck-Y81" id="2AV-N6-e9D"/>
                         <outlet property="photoImageView" destination="XBR-VA-x7b" id="6Yd-XB-vEa"/>
+                        <outlet property="testDataButton" destination="Wh2-WZ-ezS" id="3m7-l8-Sez"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0I-fe-h22" userLabel="First Responder" sceneMemberID="firstResponder"/>

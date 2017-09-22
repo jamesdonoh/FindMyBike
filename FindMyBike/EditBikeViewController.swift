@@ -29,6 +29,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBOutlet weak var beaconMajorTextField: UITextField!
     @IBOutlet weak var beaconMinorTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
+    
+    @IBOutlet weak var testDataButton: UIButton!
 
     weak var photoAspectRatioConstraint: NSLayoutConstraint!
 
@@ -46,17 +48,11 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         beaconMajorTextField.delegate = self
         beaconMinorTextField.delegate = self
 
-        if let bike = bike {
-            makeTextField.text = bike.make
-            modelTextField.text = bike.model
-            beaconUUIDTextField.text = bike.beaconUUID.uuidString
-            beaconMajorTextField.text = String(bike.beaconMajor)
-            beaconMinorTextField.text = String(bike.beaconMinor)
+        populateViewWithBike()
 
-            if let photo = bike.photo {
-                updatePhotoImage(photo: photo)
-            }
-        }
+        #if IOS_SIMULATOR
+            testDataButton.isHidden = false
+        #endif
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -72,7 +68,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         //assert(identifier == EditBikeViewController.saveBikeSegueIdentifier)
 
         do {
-            try validatedBike = createBike()
+            try validatedBike = createBikeFromView()
             return true
         } catch let error as Bike.ValidationError {
             let alert = createErrorAlert(title: error.title, message: error.description)
@@ -106,6 +102,11 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         present(imagePickerController, animated: true, completion: nil)
     }
 
+    @IBAction func loadTestData(_ sender: Any) {
+        bike = BikeRegistry.r1
+        populateViewWithBike()
+    }
+
     // MARK: UIImagePickerControllerDelegate
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -132,7 +133,21 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
     // MARK: Private methods
 
-    private func createBike() throws -> Bike {
+    private func populateViewWithBike() {
+        if let bike = bike {
+            makeTextField.text = bike.make
+            modelTextField.text = bike.model
+            beaconUUIDTextField.text = bike.beaconUUID.uuidString
+            beaconMajorTextField.text = String(bike.beaconMajor)
+            beaconMinorTextField.text = String(bike.beaconMinor)
+
+            if let photo = bike.photo {
+                updatePhotoImage(photo: photo)
+            }
+        }
+    }
+
+    private func createBikeFromView() throws -> Bike {
         let make = makeTextField.text ?? ""
         let model = modelTextField.text ?? ""
         let beaconUUIDStr = beaconUUIDTextField.text ?? ""

@@ -14,7 +14,7 @@ class BikeRegistry {
 
     var myBike: Bike?
 
-    var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
+    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
 
     var missingBikes: [UInt16: Bike] = [
         1: Bike(make: "Honda", model: "CBR1000RR", beaconMinor: 1, photo: UIImage(named: "bike1")),
