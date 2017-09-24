@@ -1,0 +1,20 @@
+@startuml
+
+skinparam monochrome true
+hide empty members
+hide circle
+
+abstract class UIViewController
+abstract class UITableViewController
+
+UIViewController <|-- AppEventViewController
+AppEventViewController <|-- MainViewController
+
+MainViewController *-- RangingTableViewController
+UITableViewController <|-- RangingTableViewController
+
+MainViewController --> BikeRegistry
+MainViewController --> ProxmityMonitor
+MainViewController --> Notifications
+
+@enduml
