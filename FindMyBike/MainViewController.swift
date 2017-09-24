@@ -38,6 +38,8 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Bike
 
         proximityMonitor.delegate = self
         proximityMonitor.activate()
+
+        bikeRegistry.getBikeData()
     }
 
     // Store references to  child view controllers when embed segue occurs
