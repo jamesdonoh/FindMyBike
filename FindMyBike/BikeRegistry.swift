@@ -31,10 +31,6 @@ class BikeRegistry {
 
     var bikes = [UInt16: Bike]()
 
-    var missingBikes: [UInt16: Bike] {
-        return bikes
-    }
-
     // MARK: Public methods
 
     // TODO make these more elegant using map/filter?
@@ -53,7 +49,7 @@ class BikeRegistry {
         var missing = [(bike: Bike, proximity: String)]()
 
         for beacon in beacons {
-            if let bike = missingBikes[beacon.minor] {
+            if let bike = bikes[beacon.minor], bike.isMissing {
                 missing.append(bike: bike, proximity: beacon.proximity)
             }
         }

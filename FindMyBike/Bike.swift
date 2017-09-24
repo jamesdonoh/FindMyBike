@@ -24,6 +24,7 @@ class Bike: NSObject, NSCoding {
         static let beaconMajor = "beaconMajor"
         static let beaconMinor = "beaconMinor"
         static let photo = "photo"
+        static let isMissing = "missing"
     }
 
     // Describes possible validation errors arising during initialisation
@@ -77,6 +78,8 @@ class Bike: NSObject, NSCoding {
     
     var photo: UIImage?
 
+    var isMissing = false
+
     var makeAndModel: String {
         return "\(make) \(model)"
     }
@@ -113,9 +116,14 @@ class Bike: NSObject, NSCoding {
             throw SerialisationError.missing(PropertyKey.beaconMinor)
         }
 
+        guard let isMissing = json[PropertyKey.isMissing] as? Bool else {
+            throw SerialisationError.missing(PropertyKey.isMissing)
+        }
+
         self.make = make
         self.model = model
         self.beaconMinor = beaconMinor
+        self.isMissing = isMissing
 
         self.beaconUUID = Constants.applicationUUID
         self.beaconMajor = Constants.applicationMajor
