@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "35AE6620D6C17297A21F85C0FCC428C02E239993",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "35AE6620D6C17297A21F85C0FCC428C02E239993" : 9223372036854775807,
+    "30708670432CA2CAB3700B17388C593B1F97A8AA" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1FD0CCB6-99BB-4B58-B58A-E3E134A0303F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "35AE6620D6C17297A21F85C0FCC428C02E239993" : "FindMyBike\/",
+    "30708670432CA2CAB3700B17388C593B1F97A8AA" : "AboutMyBike\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "FindMyBike",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "FindMyBike.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:jamesdonoh\/AboutMyBike.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "30708670432CA2CAB3700B17388C593B1F97A8AA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:jamesdonoh\/FindMyBike.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "35AE6620D6C17297A21F85C0FCC428C02E239993"
+    }
+  ]
+}

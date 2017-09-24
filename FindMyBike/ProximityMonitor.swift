@@ -110,7 +110,7 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate, BluetoothDelegate {
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         os_log("didRangeBeacons: %lu beacons", log: log, type: .info, beacons.count)
 
-        guard region.identifier == Beacon.region.identifier else {
+        guard region.identifier == Constants.region.identifier else {
             os_log("Ignoring unexpected region: %@", log: log, type: .error)
             return
         }
@@ -142,11 +142,11 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate, BluetoothDelegate {
     }
 
     private var isMonitoring: Bool {
-        return locationManager.monitoredRegions.map { $0.identifier }.contains(Beacon.region.identifier)
+        return locationManager.monitoredRegions.map { $0.identifier }.contains(Constants.region.identifier)
     }
 
     private var isRanging: Bool {
-        return locationManager.rangedRegions.map { $0.identifier }.contains(Beacon.region.identifier)
+        return locationManager.rangedRegions.map { $0.identifier }.contains(Constants.region.identifier)
     }
 
     // MARK: Private methods
@@ -154,25 +154,25 @@ class ProximityMonitor: NSObject, CLLocationManagerDelegate, BluetoothDelegate {
     private func startMonitoring() {
         if !isMonitoring {
             os_log("startMonitoring", log: log, type: .error)
-            locationManager.startMonitoring(for: Beacon.region)
+            locationManager.startMonitoring(for: Constants.region)
         }
     }
 
     private func startRanging() {
         if !isRanging {
             os_log("startRanging", log: log, type: .debug)
-            locationManager.startRangingBeacons(in: Beacon.region)
+            locationManager.startRangingBeacons(in: Constants.region)
         }
     }
 
     private func stopRanging() {
         if isRanging {
             os_log("stopRanging", log: log, type: .debug)
-            locationManager.stopRangingBeacons(in: Beacon.region)
+            locationManager.stopRangingBeacons(in: Constants.region)
         }
     }
 
     private func checkRegionState() {
-        locationManager.requestState(for: Beacon.region)
+        locationManager.requestState(for: Constants.region)
     }
 }

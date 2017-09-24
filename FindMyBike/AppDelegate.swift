@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         os_log("didFinishLaunchingWithOptions", log: log, type: .debug)
+        os_log("vendor ID = %@", log: log, type: .info, UIDevice.current.identifierForVendor?.description ?? "(none)")
 
         return true
     }

@@ -82,7 +82,7 @@ class RangingTableViewController: UITableViewController {
 
         //TODO simplify/restructure this
         if indexPath.section == 0 && myBike == nil {
-            cell.titleLabel.text = "No bike configured"
+            cell.titleLabel.text = "Not configured"
             cell.subtitleLabel.text = "Tap to edit"
             cell.photoImageView.image = UIImage(named: "NoBikeIcon")
 
