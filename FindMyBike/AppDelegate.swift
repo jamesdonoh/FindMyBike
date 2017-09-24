@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         os_log("didFinishLaunchingWithOptions", log: log, type: .debug)
         os_log("vendor ID = %@", log: log, type: .info, UIDevice.current.identifierForVendor?.description ?? "(none)")
 
+        // Register for push notifications via APNs
+        UIApplication.shared.registerForRemoteNotifications()
+
         return true
     }
 
@@ -33,6 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         os_log("applicationDidBecomeActive", log: log, type: .debug)
+    }
+
+    // MARK: Remote notifications
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
+        os_log("Obtained device token for remote notifications: %@", log: log, type: .debug, String(data: deviceToken, encoding: .utf8)!)
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        os_log("Remote notifications not available: %@", log: log, type: .error, error.localizedDescription)
     }
 }
 

@@ -24,7 +24,7 @@ class RangingTableViewController: UITableViewController {
 
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RangingTableViewController.self))
 
-    let reuseIdentifier = "RangingTableViewCell"
+    let reuseIdentifier = String(describing: RangingTableViewCell.self)
 
     var missingBikes = [(bike: Bike, proximity: String)]() {
         didSet {
