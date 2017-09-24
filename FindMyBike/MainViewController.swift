@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class MainViewController: AppEventViewController, ProximityMonitorDelegate, BikeChangeDelegate {
+class MainViewController: AppEventViewController, ProximityMonitorDelegate, BikeChangeDelegate, BikeRegistryDelegate {
 
     // MARK: Properties
 
@@ -39,6 +39,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Bike
         proximityMonitor.delegate = self
         proximityMonitor.activate()
 
+        bikeRegistry.delegate = self
         bikeRegistry.getBikeData()
     }
 
@@ -108,6 +109,12 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Bike
 
     func myBikeChanged(newBike: Bike?) {
         bikeRegistry.myBike = newBike
+    }
+
+    // MARK: BikeRegistryDelegate
+
+    func apiRequestFailed() {
+        tryToPresent(AlertFactory.apiFailureWarning())
     }
 
     // MARK: Private methods

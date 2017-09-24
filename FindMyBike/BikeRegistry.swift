@@ -9,6 +9,10 @@
 import UIKit
 import os.log
 
+protocol BikeRegistryDelegate: class {
+    func apiRequestFailed()
+}
+
 class BikeRegistry {
 
     // MARK: Properties
@@ -21,14 +25,15 @@ class BikeRegistry {
 
     var myBike: Bike?
 
+    weak var delegate: BikeRegistryDelegate?
+
     static var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
 
-    var missingBikes: [UInt16: Bike] = [
-        1: Bike(make: "Honda", model: "CBR1000RR", beaconMinor: 1, photo: UIImage(named: "bike1")),
-        3: Bike(make: "Triumph", model: "Speed Triple R", beaconMinor: 2, photo: UIImage(named: "bike3"))
-    ]
-
     var bikes = [UInt16: Bike]()
+
+    var missingBikes: [UInt16: Bike] {
+        return bikes
+    }
 
     // MARK: Public methods
 
@@ -64,11 +69,13 @@ class BikeRegistry {
         session.dataTask(with: getAllBikesRequest()) { data, response, error in
             if let error = error {
                 os_log("Request error: %@", log: self.log, type: .error, error.localizedDescription)
+                self.delegate?.apiRequestFailed()
                 return
             }
 
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, httpResponse.mimeType == "application/json" else {
                 os_log("Unexpected response: %@", log: self.log, type: .error, response.debugDescription)
+                self.delegate?.apiRequestFailed()
                 return
             }
 
@@ -81,9 +88,11 @@ class BikeRegistry {
                     }
                 } else {
                     os_log("Totally unacceptable response", log: self.log, type: .error)
+                    self.delegate?.apiRequestFailed()
                 }
             } catch {
                 os_log("Error deserialising JSON: %@", log: self.log, type: .error)
+                self.delegate?.apiRequestFailed()
             }
         }.resume()
     }

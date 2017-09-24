@@ -40,4 +40,13 @@ class AlertFactory {
         
         return alertController
     }
+
+    static func apiFailureWarning() -> UIAlertController {
+        let title = "There was an error communicating with FindMyBike servers"
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+
+        return alertController
+    }
 }
