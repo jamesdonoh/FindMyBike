@@ -13,9 +13,9 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
     // MARK: Properties
 
-    static let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: EditBikeViewController.self))
-
     static let saveBikeSegueIdentifier = "saveBike"
+
+    let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: EditBikeViewController.self))
 
     // Used for exchange of bike data with ShowBikeViewController
     var bike: Bike?
@@ -37,7 +37,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     // MARK: UIViewController
 
     override func viewDidLoad() {
-        os_log("viewDidLoad", log: EditBikeViewController.log, type: .debug)
+        os_log("viewDidLoad", log: log, type: .debug)
 
         super.viewDidLoad()
 
@@ -76,7 +76,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
             return false
         } catch {
-            os_log("Unexpected error creating bike: %@", log: EditBikeViewController.log, type: .error, error.localizedDescription)
+            os_log("Unexpected error creating bike: %@", log: log, type: .error, error.localizedDescription)
             return false
         }
     }
@@ -135,6 +135,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
     private func populateViewWithBike() {
         if let bike = bike {
+            os_log("populateViewWithBike: %@", log: log, type: .debug, bike.description)
+
             makeTextField.text = bike.make
             modelTextField.text = bike.model
             beaconUUIDTextField.text = bike.beaconUUID.uuidString
@@ -155,7 +157,10 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         let beaconMinorStr = beaconMinorTextField.text ?? ""
         let photo = photoImageView.image
 
-        return try Bike(make: make, model: model, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: photo)
+        // Preserve existing ID, if any
+        let id = bike?.id
+
+        return try Bike(make: make, model: model, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: photo, id: id)
     }
 
     private func createErrorAlert(title: String, message: String) -> UIAlertController {

@@ -23,11 +23,15 @@ class BikeRegistry {
     // delegate callbacks are required)
     let session = URLSession.shared
 
-    var myBike: Bike?
+    var myBike: Bike? {
+        didSet {
+            createOrUpdate(bike: myBike)
+        }
+    }
 
     weak var delegate: BikeRegistryDelegate?
 
-    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"))
+    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"), id: nil)
 
     var bikes = [UInt16: Bike]()
 
@@ -62,7 +66,7 @@ class BikeRegistry {
     func getBikeData() {
         os_log("getBikeData", log: log, type: .debug)
 
-        session.dataTask(with: getAllBikesRequest()) { data, response, error in
+        session.dataTask(with: allBikesRequest()) { data, response, error in
             if let error = error {
                 os_log("Request error: %@", log: self.log, type: .error, error.localizedDescription)
                 self.delegate?.apiRequestFailed()
@@ -95,10 +99,88 @@ class BikeRegistry {
 
     // MARK: Private methods
 
-    private func getAllBikesRequest() -> URLRequest {
-        var urlComponents = Constants.apiBaseUrlComponents
-        urlComponents.path = "/bikes"
+    private func createOrUpdate(bike: Bike?) {
+        os_log("createOrUpdate: %@", log: log, type: .debug, bike?.description ?? "(no bike)")
 
-        return URLRequest(url: urlComponents.url!)
+        guard let bike = bike, let bikeJson = bike.asJson else {
+            os_log("Missing or invalid bike data, unable to update", log: log, type: .error)
+            return
+        }
+
+        os_log("Sending data: %@", log: log, type: .debug, String(data: bikeJson, encoding: .utf8)!)
+
+        let request = createOrUpdateRequest(bike: bike)
+        jsonApiRequest(request: request) { parsedJson in
+            guard let parsedJsonObject = parsedJson as? [String: Any] else {
+                os_log("JSON does not contain a single object", log: self.log, type: .error)
+                self.delegate?.apiRequestFailed()
+                return
+            }
+
+            //os_log("Got response: %@", log: self.log, type: .debug, parsedJsonObject)
+
+            // Store ID from API response in bike instance
+            if let newId = parsedJsonObject[Bike.PropertyKey.id] as? String {
+                bike.id = newId
+            }
+        }
+    }
+
+    // Helper function for making JSON API requests
+    private func jsonApiRequest(request: URLRequest, completion: @escaping ((Any) -> Void)) {
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                os_log("Request error: %@", log: self.log, type: .error, error.localizedDescription)
+                self.delegate?.apiRequestFailed()
+                return
+            }
+            let data = data!
+
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, httpResponse.mimeType == "application/json" else {
+                os_log("Unexpected response: %@", log: self.log, type: .error, response.debugDescription)
+                self.delegate?.apiRequestFailed()
+                return
+            }
+
+            do {
+                let parsedJson = try JSONSerialization.jsonObject(with: data)
+                completion(parsedJson)
+            } catch {
+                os_log("Error deserialising JSON: %@", log: self.log, type: .error)
+                self.delegate?.apiRequestFailed()
+                return
+            }
+        }.resume()
+    }
+
+    // Makes a GET request that returns a list of all bikes
+    private func allBikesRequest() -> URLRequest {
+        return baseRequest()
+    }
+
+    // Uses POST to updates an existing bike (if the 'id' property is set) or create a new one
+    private func createOrUpdateRequest(bike: Bike) -> URLRequest {
+        var request = baseRequest()
+
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = bike.asJson!
+
+        return request
+    }
+
+    private func baseRequest() -> URLRequest {
+        var request = URLRequest(url: baseUrl())
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")
+
+        return request
+    }
+
+    private func baseUrl() -> URL {
+        var components = URLComponents(string: Constants.apiBaseUrl)!
+        components.queryItems = [URLQueryItem(name: "key", value: Constants.apiKey)]
+        components.path = "/bikes"
+
+        return components.url!
     }
 }
