@@ -20,17 +20,22 @@ class BikeRegistry {
 
     let api = BikeRegistryAPI()
 
-    var myBike: Bike? = BikeRegistry.loadFromFile(file: myBikeArchiveUrl) {
-        // NB property observer not called during initialisation
+    var myBike: Bike? = BikeRegistry.loadMyBike() {
+        // Property observers not called during initialisation
         didSet {
-            saveToFile(bike: myBike, file: BikeRegistry.myBikeArchiveUrl)
-            api.createOrUpdate(bike: myBike)
+            api.createOrUpdate(registry: self, bike: myBike)
         }
     }
 
     static var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"), id: nil)
 
     var bikes = [UInt16: Bike]()
+
+    // MARK: Initialisation
+
+    init() {
+        os_log("init; myBike is %@", log: log, type: .debug, myBike?.description ?? "nil")
+    }
 
     // MARK: Public interface
 
@@ -67,15 +72,23 @@ class BikeRegistry {
 
     // MARK: Local persistence using keyed archiver (subclass of NSCoder)
 
+    func saveMyBike() {
+        saveToFile(bike: myBike, file: BikeRegistry.myBikeArchiveUrl)
+    }
+
     private func saveToFile(bike: Bike?, file: URL) {
         if let bike = bike {
             let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(bike, toFile: file.path)
             if isSuccessfulSave {
-                os_log("Bike data successfully saved to file", log: log, type: .debug)
+                os_log("Bike data successfully saved to file: %@", log: log, type: .debug, bike.description)
             } else {
                 os_log("Error saving bike to file", log: log, type: .error)
             }
         }
+    }
+
+    private static func loadMyBike() -> Bike? {
+        return BikeRegistry.loadFromFile(file: BikeRegistry.myBikeArchiveUrl)
     }
 
     private static func loadFromFile(file: URL) -> Bike? {

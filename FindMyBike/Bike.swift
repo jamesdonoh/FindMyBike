@@ -142,6 +142,7 @@ class Bike: NSObject, NSCoding {
     // MARK: NSCoding
     
     func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey: PropertyKey.id)
         aCoder.encode(make, forKey: PropertyKey.make)
         aCoder.encode(model, forKey: PropertyKey.model)
         aCoder.encode(beaconUUID, forKey: PropertyKey.beaconUUID)
@@ -172,8 +173,8 @@ class Bike: NSObject, NSCoding {
         }
         
         // Because ID and photo are optional just use conditional cast
+        let id = aDecoder.decodeObject(forKey: PropertyKey.id) as? String
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
-        let id = aDecoder.decodeObject(forKey: PropertyKey.photo) as? String
 
         // Must call designated initializer.
         self.init(make: make, model: model, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)

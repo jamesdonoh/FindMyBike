@@ -50,9 +50,9 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
         populateViewWithBike()
 
-        #if IOS_SIMULATOR
+//        #if IOS_SIMULATOR
             testDataButton.isHidden = false
-        #endif
+//        #endif
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

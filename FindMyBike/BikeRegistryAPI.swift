@@ -52,7 +52,7 @@ class BikeRegistryAPI {
         }
     }
 
-    func createOrUpdate(bike: Bike?) {
+    func createOrUpdate(registry: BikeRegistry, bike: Bike?) {
         os_log("apiCreateOrUpdate: %@", log: log, type: .debug, bike?.description ?? "(no bike)")
 
         guard let bike = bike, let bikeJson = bike.asJson else {
@@ -75,6 +75,7 @@ class BikeRegistryAPI {
             // Store ID from API response in bike instance
             if let newId = parsedJsonObject[Bike.PropertyKey.id] as? String {
                 bike.id = newId
+                registry.saveMyBike()
             }
         }
     }
