@@ -27,6 +27,7 @@
 		FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */; };
 		FDE47A3A1F6D7D05004D0C45 /* AppEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */; };
 		FDE9CC691F719FD500A5A080 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CC681F719FD500A5A080 /* Notifications.swift */; };
+		FDEA10651F78D5E000205176 /* BikeRegistryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA10641F78D5E000205176 /* BikeRegistryAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEventViewController.swift; sourceTree = "<group>"; };
 		FDE9CC681F719FD500A5A080 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		FDEA10641F78D5E000205176 /* BikeRegistryAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeRegistryAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */,
 				FD153DE81F65A97A00ED463C /* Bike.swift */,
 				FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */,
+				FDEA10641F78D5E000205176 /* BikeRegistryAPI.swift */,
 				FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */,
 				FD67A6D31F72ECB70095ACD2 /* CLExtensions.swift */,
 				FDD111381F6E89D500D5B0B3 /* Constants.swift */,
@@ -268,6 +271,7 @@
 				FD67A6D41F72ECB70095ACD2 /* CLExtensions.swift in Sources */,
 				FDD111391F6E89D500D5B0B3 /* Constants.swift in Sources */,
 				FD11EEA81F6DA9D900A597CF /* RangingTableViewCell.swift in Sources */,
+				FDEA10651F78D5E000205176 /* BikeRegistryAPI.swift in Sources */,
 				FD153DC51F65866200ED463C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

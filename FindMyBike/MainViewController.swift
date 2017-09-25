@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class MainViewController: AppEventViewController, ProximityMonitorDelegate, BikeChangeDelegate, BikeRegistryDelegate {
+class MainViewController: AppEventViewController, ProximityMonitorDelegate, BikeChangeDelegate, BikeRegistryAPIDelegate {
 
     // MARK: Properties
 
@@ -39,8 +39,8 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Bike
         proximityMonitor.delegate = self
         proximityMonitor.activate()
 
-        bikeRegistry.delegate = self
-        bikeRegistry.getBikeData()
+        bikeRegistry.api.delegate = self
+        bikeRegistry.loadBikes()
     }
 
     // Store references to  child view controllers when embed segue occurs
@@ -111,9 +111,9 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Bike
         bikeRegistry.myBike = newBike
     }
 
-    // MARK: BikeRegistryDelegate
+    // MARK: BikeRegistryAPIDelegate
 
-    func apiRequestFailed() {
+    func requestFailed() {
         tryToPresent(AlertFactory.apiFailureWarning())
     }
 
