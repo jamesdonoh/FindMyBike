@@ -21,6 +21,7 @@ class Bike: NSObject, NSCoding {
         static let id = "id"
         static let make = "make"
         static let model = "model"
+        static let colour = "colour"
         static let beaconUUID = "beaconUUID"
         static let beaconMajor = "beaconMajor"
         static let beaconMinor = "beaconMinor"
@@ -75,6 +76,8 @@ class Bike: NSObject, NSCoding {
 
     var make: String
     var model: String
+    var colour: Colour?
+
     var beaconUUID: UUID
     var beaconMajor: UInt16
     var beaconMinor: UInt16
@@ -89,7 +92,7 @@ class Bike: NSObject, NSCoding {
     
     // MARK: Initialisation
     
-    init?(make: String, model: String, beaconUUID: UUID, beaconMajor: UInt16, beaconMinor: UInt16, photo: UIImage?, id: String?) {
+    init?(make: String, model: String, colour: Colour?, beaconUUID: UUID, beaconMajor: UInt16, beaconMinor: UInt16, photo: UIImage?, id: String?) {
         // The make and model must not be empty
         guard !make.isEmpty && !model.isEmpty else {
             return nil
@@ -98,6 +101,7 @@ class Bike: NSObject, NSCoding {
         // Initialise stored properties
         self.make = make
         self.model = model
+        self.colour = colour
         self.beaconUUID = beaconUUID
         self.beaconMajor = beaconMajor
         self.beaconMinor = beaconMinor
@@ -116,6 +120,10 @@ class Bike: NSObject, NSCoding {
             throw SerialisationError.missing(PropertyKey.model)
         }
 
+        guard let colour = json[PropertyKey.colour] as? Colour else {
+            throw SerialisationError.missing(PropertyKey.colour)
+        }
+
         guard let beaconMinor = json[PropertyKey.beaconMinor] as? UInt16 else {
             throw SerialisationError.missing(PropertyKey.beaconMinor)
         }
@@ -126,6 +134,7 @@ class Bike: NSObject, NSCoding {
 
         self.make = make
         self.model = model
+        self.colour = colour
         self.beaconMinor = beaconMinor
         self.isMissing = isMissing
 
@@ -145,6 +154,7 @@ class Bike: NSObject, NSCoding {
         aCoder.encode(id, forKey: PropertyKey.id)
         aCoder.encode(make, forKey: PropertyKey.make)
         aCoder.encode(model, forKey: PropertyKey.model)
+        aCoder.encode(colour, forKey: PropertyKey.colour)
         aCoder.encode(beaconUUID, forKey: PropertyKey.beaconUUID)
         aCoder.encode(beaconMajor, forKey: PropertyKey.beaconMajor)
         aCoder.encode(beaconMinor, forKey: PropertyKey.beaconMinor)
@@ -172,12 +182,13 @@ class Bike: NSObject, NSCoding {
             return nil
         }
         
-        // Because ID and photo are optional just use conditional cast
+        // Because these properties are optional just use conditional cast
         let id = aDecoder.decodeObject(forKey: PropertyKey.id) as? String
+        let colour = aDecoder.decodeObject(forKey: PropertyKey.colour) as? Colour
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
 
         // Must call designated initializer.
-        self.init(make: make, model: model, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)
+        self.init(make: make, model: model, colour: colour, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)
     }
 
     // Convenience initialiser to handle string inputs (e.g. from a form)
@@ -199,14 +210,14 @@ class Bike: NSObject, NSCoding {
         }
 
         // Force designated initialiser not to fail because we have already validated make and model ourselves
-        self.init(make: make, model: model, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
+        self.init(make: make, model: model, colour: nil, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
     }
 
     // Convenience initialiser for creating test data easily
     convenience init(make: String, model: String, beaconMinor: UInt16, photo: UIImage?, id: String?) {
         // NB bypasses make/model validation
         
-        self.init(make: make, model: model, beaconUUID: Constants.applicationUUID, beaconMajor: Constants.applicationMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
+        self.init(make: make, model: model, colour: nil, beaconUUID: Constants.applicationUUID, beaconMajor: Constants.applicationMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
     }
 
     // Manual JSON encoding (can be replaced with Codable in Swift 4)
@@ -216,6 +227,7 @@ class Bike: NSObject, NSCoding {
             PropertyKey.id: id,
             PropertyKey.make: make,
             PropertyKey.model: model,
+            PropertyKey.colour: colour,
             PropertyKey.beaconMinor: beaconMinor,
             PropertyKey.isMissing: isMissing
         ]
@@ -226,6 +238,6 @@ class Bike: NSObject, NSCoding {
     // Example full bike instance (for testing editing form only)
     override convenience init() {
         let photo = UIImage(named: "examplePhoto")!
-        self.init(make: "Suzuki", model: "SV650S", beaconUUID: UUID(uuidString: "21EECF71-D5C7-4A00-9B90-27C94B5146EA")!, beaconMajor: 1, beaconMinor: 1, photo: photo, id: nil)!
+        self.init(make: "Suzuki", model: "SV650S", colour: nil, beaconUUID: UUID(uuidString: "21EECF71-D5C7-4A00-9B90-27C94B5146EA")!, beaconMajor: 1, beaconMinor: 1, photo: photo, id: nil)!
     }
 }

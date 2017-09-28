@@ -21,11 +21,18 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     // Used for exchange of bike data with ShowBikeViewController
     var bike: Bike?
 
+    var colour: Colour? {
+        didSet {
+            colourLabel.text = colour?.description
+        }
+    }
+
     // Used to store new bike details temporarily after validation
     private var validatedBike: Bike?
 
     @IBOutlet weak var makeTextField: UITextField!
     @IBOutlet weak var modelTextField: UITextField!
+    @IBOutlet weak var colourLabel: UILabel!
     @IBOutlet weak var beaconUUIDTextField: UITextField!
     @IBOutlet weak var beaconMajorTextField: UITextField!
     @IBOutlet weak var beaconMinorTextField: UITextField!
@@ -59,9 +66,17 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
 
-        if segue.identifier == EditBikeViewController.saveBikeSegueIdentifier {
+        guard let identifier = segue.identifier else {
+            fatalError("Missing segue identifier")
+        }
+
+        if identifier == EditBikeViewController.saveBikeSegueIdentifier {
             // shouldPerformSegue has already done the necessary validation, so we just pass it back
             bike = validatedBike
+        } else if identifier == EditBikeViewController.setColourSegueIdentifier,
+            let navigationController = segue.destination as? UINavigationController,
+            let colourTableViewController = navigationController.topViewController as? ColourTableViewController {
+            colourTableViewController.selectedColour = colour
         }
     }
 
@@ -113,8 +128,9 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBAction func unwindToEditBike(sender: UIStoryboardSegue) {
         os_log("unwindToEditBike", log: log, type: .debug)
 
-//        if let sourceViewController = sender.sourceViewController as? MealViewController, meal = sourceViewController.meal {
-//        }
+        if let source = sender.source as? ColourTableViewController {
+            colour = source.selectedColour
+        }
     }
 
     // MARK: UIImagePickerControllerDelegate

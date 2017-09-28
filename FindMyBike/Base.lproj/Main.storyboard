@@ -180,6 +180,7 @@
                         <outlet property="beaconMajorTextField" destination="2EF-0m-d9l" id="LJq-bf-KVl"/>
                         <outlet property="beaconMinorTextField" destination="M9T-Fb-pbn" id="jGZ-RW-o2U"/>
                         <outlet property="beaconUUIDTextField" destination="Pb5-w6-1Rf" id="tlo-Rm-Y8U"/>
+                        <outlet property="colourLabel" destination="hWs-Pa-ShO" id="U2A-yT-G81"/>
                         <outlet property="makeTextField" destination="034-Q9-95H" id="jRl-i4-70X"/>
                         <outlet property="modelTextField" destination="4to-Ck-Y81" id="2AV-N6-e9D"/>
                         <outlet property="photoImageView" destination="XBR-VA-x7b" id="6Yd-XB-vEa"/>
@@ -229,12 +230,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Choose colour" id="XpI-pw-de3">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="fkD-lE-Yel">
+                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="Nq3-kg-Bvu">
                             <connections>
-                                <segue destination="b0J-JC-nq9" kind="unwind" unwindAction="unwindToEditBikeWithSender:" id="MAk-kf-Ll9"/>
+                                <action selector="cancel:" destination="eis-Ec-tAY" id="1db-FV-KC9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="b0J-JC-nq9" kind="unwind" identifier="unwindToEditBike" unwindAction="unwindToEditBikeWithSender:" id="uDR-EZ-srK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KyV-7b-5zR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="b0J-JC-nq9" userLabel="Exit" sceneMemberID="exit"/>

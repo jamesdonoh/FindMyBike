@@ -11,13 +11,21 @@ import os.log
 
 class ColourTableViewController: UITableViewController {
 
+    static let unwindToEditBikeSegueIdentifier = "unwindToEditBike"
+
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: ColourTableViewController.self))
 
     let reuseIdentifier = "ColourTableViewCell"
 
-    let colours = ["Black", "Red", "Blue", "Green", "White"]
+    var selectedColour: Colour?
 
-    var currentColour: String?
+    var selectedRow: Int? {
+        guard let colour = selectedColour else {
+            return nil
+        }
+
+        return Colour.all.index(of: colour)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +38,16 @@ class ColourTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return colours.count
+        return Colour.all.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as UITableViewCell
 
-        cell.textLabel!.text = colours[indexPath.row]
+        cell.textLabel!.text = Colour.all[indexPath.row].description
+        if indexPath.row == selectedRow {
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+        }
 
         return cell
     }
@@ -52,63 +63,25 @@ class ColourTableViewController: UITableViewController {
 
         tableView.deselectRow(at: indexPath, animated: false)
 
-        if currentColour != nil, let oldIndex = colours.index(of: currentColour!) {
-            if oldIndex == indexPath.row {
+        if let oldRow = selectedRow {
+            if indexPath.row == oldRow {
                 return
             }
-            guard let oldCell = tableView.cellForRow(at: IndexPath(row: oldIndex, section: 0)) else {
-                fatalError("Previous selected colour does not exist in table")
+            guard let oldCell = tableView.cellForRow(at: IndexPath(row: oldRow, section: 0)) else {
+                fatalError("Selected colour does not exist in table")
             }
             oldCell.accessoryType = UITableViewCellAccessoryType.none
         }
 
         cell.accessoryType = UITableViewCellAccessoryType.checkmark
-        currentColour = colours[indexPath.row]
+        selectedColour = Colour.all[indexPath.row]
+
+        performSegue(withIdentifier: ColourTableViewController.unwindToEditBikeSegueIdentifier, sender: self)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    // MARK: Navigation
+
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: false, completion: nil)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -21,6 +21,7 @@
 		FD67A6D41F72ECB70095ACD2 /* CLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD67A6D31F72ECB70095ACD2 /* CLExtensions.swift */; };
 		FD6E7FF21F6E7E13005E8908 /* BikeRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */; };
 		FD9D270E1F7D5CBC003F5B1A /* ColourTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9D270D1F7D5CBC003F5B1A /* ColourTableViewController.swift */; };
+		FD9D27101F7D7969003F5B1A /* Colour.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9D270F1F7D7969003F5B1A /* Colour.swift */; };
 		FDD111391F6E89D500D5B0B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD111381F6E89D500D5B0B3 /* Constants.swift */; };
 		FDD1113B1F6E8E1400D5B0B3 /* ProximityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */; };
 		FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */; };
@@ -61,6 +62,7 @@
 		FD67A6D31F72ECB70095ACD2 /* CLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLExtensions.swift; sourceTree = "<group>"; };
 		FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeRegistry.swift; sourceTree = "<group>"; };
 		FD9D270D1F7D5CBC003F5B1A /* ColourTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColourTableViewController.swift; sourceTree = "<group>"; };
+		FD9D270F1F7D7969003F5B1A /* Colour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colour.swift; sourceTree = "<group>"; };
 		FDD111381F6E89D500D5B0B3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityMonitor.swift; sourceTree = "<group>"; };
 		FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothSupport.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				FD153DC41F65866200ED463C /* AppDelegate.swift */,
 				FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */,
 				FD153DE81F65A97A00ED463C /* Bike.swift */,
+				FD9D270F1F7D7969003F5B1A /* Colour.swift */,
 				FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */,
 				FDEA10641F78D5E000205176 /* BikeRegistryAPI.swift */,
 				FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */,
@@ -273,6 +276,7 @@
 				FDE9CC691F719FD500A5A080 /* Notifications.swift in Sources */,
 				FD67A6D41F72ECB70095ACD2 /* CLExtensions.swift in Sources */,
 				FD9D270E1F7D5CBC003F5B1A /* ColourTableViewController.swift in Sources */,
+				FD9D27101F7D7969003F5B1A /* Colour.swift in Sources */,
 				FDD111391F6E89D500D5B0B3 /* Constants.swift in Sources */,
 				FD11EEA81F6DA9D900A597CF /* RangingTableViewCell.swift in Sources */,
 				FDEA10651F78D5E000205176 /* BikeRegistryAPI.swift in Sources */,
