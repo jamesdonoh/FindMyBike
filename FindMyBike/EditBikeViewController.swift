@@ -14,6 +14,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     // MARK: Properties
 
     static let saveBikeSegueIdentifier = "saveBike"
+    static let setColourSegueIdentifier = "setColour"
 
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: EditBikeViewController.self))
 
@@ -56,16 +57,18 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //assert(segue.identifier == EditBikeViewController.saveBikeSegueIdentifier)
-
         super.prepare(for: segue, sender: sender)
 
-        // shouldPerformSegue has already done the necessary validation, so we just pass it back
-        bike = validatedBike
+        if segue.identifier == EditBikeViewController.saveBikeSegueIdentifier {
+            // shouldPerformSegue has already done the necessary validation, so we just pass it back
+            bike = validatedBike
+        }
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        //assert(identifier == EditBikeViewController.saveBikeSegueIdentifier)
+        if identifier == EditBikeViewController.setColourSegueIdentifier {
+            return true
+        }
 
         do {
             try validatedBike = createBikeFromView()
@@ -105,6 +108,13 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBAction func loadTestData(_ sender: Any) {
         bike = BikeRegistry.r1
         populateViewWithBike()
+    }
+
+    @IBAction func unwindToEditBike(sender: UIStoryboardSegue) {
+        os_log("unwindToEditBike", log: log, type: .debug)
+
+//        if let sourceViewController = sender.sourceViewController as? MealViewController, meal = sourceViewController.meal {
+//        }
     }
 
     // MARK: UIImagePickerControllerDelegate
