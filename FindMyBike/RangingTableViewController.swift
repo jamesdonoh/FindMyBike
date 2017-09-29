@@ -26,6 +26,9 @@ class RangingTableViewController: UITableViewController {
 
     let reuseIdentifier = String(describing: RangingTableViewCell.self)
 
+    let monoBikeIcon = UIImage(named: "MonoBikeIcon")
+    let defaultIconColour = UIColor.lightGray
+
     var missingBikes = [(bike: Bike, proximity: String)]() {
         didSet {
             tableView.reloadData()
@@ -80,25 +83,31 @@ class RangingTableViewController: UITableViewController {
             fatalError("The dequeued call is not an instance of \(reuseIdentifier)")
         }
 
-        //TODO simplify/restructure this
+        cell.photoImageView.image = monoBikeIcon
+        cell.photoImageView.tintColor = defaultIconColour
+
+        //TODO simplify/restructure this and get rid of bike.bike etc.
         if indexPath.section == 0 && myBike == nil {
             cell.titleLabel.text = "Not configured"
             cell.subtitleLabel.text = "Tap to edit"
-            cell.photoImageView.image = UIImage(named: "NoBikeIcon")
-
-            return cell
-        }
-
-        var bike: (bike: Bike, proximity: String)
-        if indexPath.section == 0 && myBike != nil {
-            bike = (bike: myBike!, proximity: myBikeProximity ?? "Not in range")
         } else {
-            bike = missingBikes[indexPath.row]
-        }
+            var bike: (bike: Bike, proximity: String)
+            if indexPath.section == 0 && myBike != nil {
+                bike = (bike: myBike!, proximity: myBikeProximity ?? "Not in range")
+            } else {
+                bike = missingBikes[indexPath.row]
+            }
 
-        cell.titleLabel.text = bike.bike.makeAndModel
-        cell.subtitleLabel.text = bike.proximity
-        cell.photoImageView.image = bike.bike.photo
+            cell.titleLabel.text = bike.bike.makeAndModel
+            cell.subtitleLabel.text = bike.proximity
+
+            if let colour = bike.bike.colour {
+                cell.photoImageView.tintColor = colour.ui
+            }
+            if let photo = bike.bike.photo {
+                cell.photoImageView.image = photo
+            }
+        }
 
         return cell
     }

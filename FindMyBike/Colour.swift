@@ -24,17 +24,17 @@ enum Colour: String {
         case .white:
             return UIColor.white
         case .grey:
-            return UIColor.gray
+            return UIColor.darkGray
         case .red:
-            return UIColor.red
+            return UIColor(red:0.80, green:0.00, blue:0.00, alpha:1.0)
         case .green:
-            return UIColor.green
+            return UIColor(red:0.21, green:0.68, blue:0.00, alpha:1.0)
         case .blue:
-            return UIColor.blue
+            return UIColor(red:0.12, green:0.00, blue:0.63, alpha:1.0)
         case .yellow:
-            return UIColor.yellow
+            return UIColor(red:0.80, green:0.82, blue:0.02, alpha:1.0)
         case .orange:
-            return UIColor.orange
+            return UIColor(red:0.84, green:0.36, blue:0.02, alpha:1.0)
         }
     }
 }

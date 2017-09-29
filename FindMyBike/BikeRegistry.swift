@@ -27,7 +27,8 @@ class BikeRegistry {
         }
     }
 
-    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", colour: .blue, beaconMinor: 3, photo: UIImage(named: "bike2"), id: nil)
+    //static var r1 = Bike(make: "Yamaha", model: "YZF-R1", colour: .blue, beaconMinor: 3, photo: UIImage(named: "bike2"), id: nil)
+    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", colour: .blue, beaconMinor: 3, photo: nil, id: nil)
 
     var bikes = [UInt16: Bike]()
 
