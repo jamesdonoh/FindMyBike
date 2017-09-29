@@ -41,6 +41,16 @@ class AlertFactory {
         return alertController
     }
 
+    static func makeMissingBikeAlert() -> UIAlertController {
+        let title = "Bike reported as missing"
+        let message = "You will receive push notifications about this bike's location if it is detected"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+
+        return alertController
+    }
+
     static func apiFailureWarning() -> UIAlertController {
         let title = "There was an error communicating with FindMyBike servers"
         let message = "Please try again later"

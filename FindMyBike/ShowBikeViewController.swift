@@ -57,13 +57,13 @@ class ShowBikeViewController: AppEventViewController, RangingDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
 
-        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
-            fatalError("Unexpected destination: \(segue.destination)")
-        }
+//        guard let editBikeViewController = segue.destination as? EditBikeViewController else {
+//            fatalError("Unexpected destination: \(segue.destination)")
+//        }
 
         // Temporary for testing
         //editBikeViewController.bike = bike
-        editBikeViewController.bike = bike ?? Bike()
+//        editBikeViewController.bike = bike ?? Bike()
     }
 
     // MARK: Actions

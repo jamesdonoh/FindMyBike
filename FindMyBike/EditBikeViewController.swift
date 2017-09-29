@@ -35,12 +35,16 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
     @IBOutlet weak var makeTextField: UITextField!
     @IBOutlet weak var modelTextField: UITextField!
+
     @IBOutlet weak var colourLabel: UILabel!
     @IBOutlet weak var colourSwatch: UILabel!
 
     @IBOutlet weak var beaconUUIDTextField: UITextField!
     @IBOutlet weak var beaconMajorTextField: UITextField!
     @IBOutlet weak var beaconMinorTextField: UITextField!
+
+    @IBOutlet weak var missingSwitch: UISwitch!
+
     @IBOutlet weak var photoImageView: UIImageView!
     
     @IBOutlet weak var testDataButton: UIButton!
@@ -62,6 +66,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         beaconMinorTextField.delegate = self
 
         colourLabel.text = colourPrompt
+        missingSwitch.isOn = false
+        
         populateViewWithBike()
 
 //        #if IOS_SIMULATOR
@@ -140,6 +146,15 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         }
     }
 
+    @IBAction func missingSwitchFlipped(_ sender: UISwitch) {
+        os_log("missingSwitchFlipped, now: %@", log: log, type: .debug, String(missingSwitch.isOn))
+
+        if missingSwitch.isOn {
+            let alert = AlertFactory.makeMissingBikeAlert()
+            parent?.present(alert, animated: true)
+        }
+    }
+
     // MARK: UIImagePickerControllerDelegate
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -178,6 +193,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
             beaconMajorTextField.text = String(bike.beaconMajor)
             beaconMinorTextField.text = String(bike.beaconMinor)
 
+            missingSwitch.isOn = bike.isMissing
+
             if let photo = bike.photo {
                 updatePhotoImage(photo: photo)
             }
@@ -187,15 +204,19 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     private func createBikeFromView() throws -> Bike {
         let make = makeTextField.text ?? ""
         let model = modelTextField.text ?? ""
+
         let beaconUUIDStr = beaconUUIDTextField.text ?? ""
         let beaconMajorStr = beaconMajorTextField.text ?? ""
         let beaconMinorStr = beaconMinorTextField.text ?? ""
+
+        let isMissing = missingSwitch.isOn
+
         let photo = photoImageView.image
 
         // Preserve existing ID, if any
         let id = bike?.id
 
-        return try Bike(make: make, model: model, colour: colour, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: photo, id: id)
+        return try Bike(make: make, model: model, colour: colour, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, isMissing: isMissing, photo: photo, id: id)
     }
 
     private func createErrorAlert(title: String, message: String) -> UIAlertController {
