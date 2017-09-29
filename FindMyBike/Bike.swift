@@ -14,9 +14,6 @@ class Bike: NSObject, NSCoding {
 
     // MARK: Properties
     
-    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("bike")
-    
     struct PropertyKey {
         static let id = "id"
         static let make = "make"
@@ -120,10 +117,6 @@ class Bike: NSObject, NSCoding {
             throw SerialisationError.missing(PropertyKey.model)
         }
 
-        guard let colour = json[PropertyKey.colour] as? Colour else {
-            throw SerialisationError.missing(PropertyKey.colour)
-        }
-
         guard let beaconMinor = json[PropertyKey.beaconMinor] as? UInt16 else {
             throw SerialisationError.missing(PropertyKey.beaconMinor)
         }
@@ -134,7 +127,7 @@ class Bike: NSObject, NSCoding {
 
         self.make = make
         self.model = model
-        self.colour = colour
+        self.colour = json[PropertyKey.colour] as? Colour
         self.beaconMinor = beaconMinor
         self.isMissing = isMissing
 
@@ -145,7 +138,7 @@ class Bike: NSObject, NSCoding {
     // MARK: CustomStringConvertible
     
     override var description: String {
-        return "[\(id ?? "none")] \(make) \(model) (minor: \(beaconMinor))"
+        return "[\(id ?? "none")] \(make) \(model) \(colour?.description ?? "none") (minor: \(beaconMinor))"
     }
     
     // MARK: NSCoding
@@ -154,7 +147,7 @@ class Bike: NSObject, NSCoding {
         aCoder.encode(id, forKey: PropertyKey.id)
         aCoder.encode(make, forKey: PropertyKey.make)
         aCoder.encode(model, forKey: PropertyKey.model)
-        aCoder.encode(colour, forKey: PropertyKey.colour)
+        aCoder.encode(colour?.rawValue, forKey: PropertyKey.colour)
         aCoder.encode(beaconUUID, forKey: PropertyKey.beaconUUID)
         aCoder.encode(beaconMajor, forKey: PropertyKey.beaconMajor)
         aCoder.encode(beaconMinor, forKey: PropertyKey.beaconMinor)
@@ -184,15 +177,20 @@ class Bike: NSObject, NSCoding {
         
         // Because these properties are optional just use conditional cast
         let id = aDecoder.decodeObject(forKey: PropertyKey.id) as? String
-        let colour = aDecoder.decodeObject(forKey: PropertyKey.colour) as? Colour
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
+
+        // Special handling for colour enum - need to work with raw value directly
+        var colour: Colour?
+        if let colourValue = aDecoder.decodeObject(forKey: PropertyKey.colour) as? String {
+            colour = Colour(rawValue: colourValue)
+        }
 
         // Must call designated initializer.
         self.init(make: make, model: model, colour: colour, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)
     }
 
     // Convenience initialiser to handle string inputs (e.g. from a form)
-    convenience init(make: String, model: String, beaconUUIDStr: String, beaconMajorStr: String, beaconMinorStr: String, photo: UIImage?, id: String?) throws {
+    convenience init(make: String, model: String, colour: Colour?, beaconUUIDStr: String, beaconMajorStr: String, beaconMinorStr: String, photo: UIImage?, id: String?) throws {
         guard !make.isEmpty else {
             throw ValidationError.emptyMake
         }
@@ -210,27 +208,30 @@ class Bike: NSObject, NSCoding {
         }
 
         // Force designated initialiser not to fail because we have already validated make and model ourselves
-        self.init(make: make, model: model, colour: nil, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
+        self.init(make: make, model: model, colour: colour, beaconUUID: beaconUUID, beaconMajor: beaconMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
     }
 
     // Convenience initialiser for creating test data easily
-    convenience init(make: String, model: String, beaconMinor: UInt16, photo: UIImage?, id: String?) {
+    convenience init(make: String, model: String, colour: Colour?, beaconMinor: UInt16, photo: UIImage?, id: String?) {
         // NB bypasses make/model validation
         
-        self.init(make: make, model: model, colour: nil, beaconUUID: Constants.applicationUUID, beaconMajor: Constants.applicationMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
+        self.init(make: make, model: model, colour: colour, beaconUUID: Constants.applicationUUID, beaconMajor: Constants.applicationMajor, beaconMinor: beaconMinor, photo: photo, id: id)!
     }
 
     // Manual JSON encoding (can be replaced with Codable in Swift 4)
     var asJson: Data? {
         //return "{}".data(using: .utf8)!
-        let jsonData: [String: Any?] = [
+        var jsonData: [String: Any?] = [
             PropertyKey.id: id,
             PropertyKey.make: make,
             PropertyKey.model: model,
-            PropertyKey.colour: colour,
             PropertyKey.beaconMinor: beaconMinor,
             PropertyKey.isMissing: isMissing
         ]
+
+        if colour != nil {
+            jsonData[PropertyKey.colour] = colour!.rawValue
+        }
 
         return try? JSONSerialization.data(withJSONObject: jsonData)
     }
@@ -238,6 +239,6 @@ class Bike: NSObject, NSCoding {
     // Example full bike instance (for testing editing form only)
     override convenience init() {
         let photo = UIImage(named: "examplePhoto")!
-        self.init(make: "Suzuki", model: "SV650S", colour: nil, beaconUUID: UUID(uuidString: "21EECF71-D5C7-4A00-9B90-27C94B5146EA")!, beaconMajor: 1, beaconMinor: 1, photo: photo, id: nil)!
+        self.init(make: "Suzuki", model: "SV650S", colour: Colour.black, beaconUUID: UUID(uuidString: "21EECF71-D5C7-4A00-9B90-27C94B5146EA")!, beaconMajor: 1, beaconMinor: 1, photo: photo, id: nil)!
     }
 }

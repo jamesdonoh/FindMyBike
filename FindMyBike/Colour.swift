@@ -8,30 +8,13 @@
 
 import UIKit
 
-enum Colour {
+enum Colour: String {
     case black, white, grey, red, green, blue, yellow, orange
 
     static var all: [Colour] = [.black, .white, .grey, .red, .green, .blue, .yellow, .orange]
 
     var description: String {
-        switch self {
-        case .black:
-            return "Black"
-        case .white:
-            return "White"
-        case .grey:
-            return "Grey"
-        case .red:
-            return "Red"
-        case .green:
-            return "Green"
-        case .blue:
-            return "Blue"
-        case .yellow:
-            return "Yellow"
-        case .orange:
-            return "Orange"
-        }
+        return String(rawValue.characters.prefix(1)).capitalized + String(rawValue.characters.dropFirst())
     }
 
     var ui: UIColor {

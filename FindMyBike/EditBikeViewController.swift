@@ -16,6 +16,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     static let saveBikeSegueIdentifier = "saveBike"
     static let setColourSegueIdentifier = "setColour"
 
+    let colourPrompt = "Tap to set"
+
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: EditBikeViewController.self))
 
     // Used for exchange of bike data with ShowBikeViewController
@@ -23,7 +25,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
     var colour: Colour? {
         didSet {
-            colourLabel.text = colour?.description
+            colourLabel.text = colour?.description ?? colourPrompt
         }
     }
 
@@ -56,6 +58,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         beaconMajorTextField.delegate = self
         beaconMinorTextField.delegate = self
 
+        colourLabel.text = colourPrompt
         populateViewWithBike()
 
 //        #if IOS_SIMULATOR
@@ -87,6 +90,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
         do {
             try validatedBike = createBikeFromView()
+            os_log("Created bike instance: %@", log: log, type: .error, validatedBike!.description)
             return true
         } catch let error as Bike.ValidationError {
             let alert = createErrorAlert(title: error.title, message: error.description)
@@ -165,6 +169,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
             makeTextField.text = bike.make
             modelTextField.text = bike.model
+            colour = bike.colour
+
             beaconUUIDTextField.text = bike.beaconUUID.uuidString
             beaconMajorTextField.text = String(bike.beaconMajor)
             beaconMinorTextField.text = String(bike.beaconMinor)
@@ -186,7 +192,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         // Preserve existing ID, if any
         let id = bike?.id
 
-        return try Bike(make: make, model: model, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: photo, id: id)
+        return try Bike(make: make, model: model, colour: colour, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, photo: photo, id: id)
     }
 
     private func createErrorAlert(title: String, message: String) -> UIAlertController {

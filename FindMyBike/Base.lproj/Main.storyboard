@@ -94,7 +94,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" contentMode="left" text="Tap to set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWs-Pa-ShO">
+                                            <label opaque="NO" contentMode="left" text="Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWs-Pa-ShO">
                                                 <rect key="frame" x="51" y="0.0" width="260" height="17"/>
                                                 <gestureRecognizers/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -172,7 +172,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Qtl-WT-64S">
                             <connections>
-                                <segue destination="p5K-j6-596" kind="unwind" unwindAction="unwindToRangingTableWithSender:" id="pRc-rP-vOj"/>
+                                <segue destination="p5K-j6-596" kind="unwind" identifier="saveBike" unwindAction="unwindToRangingTableWithSender:" id="pRc-rP-vOj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -230,7 +230,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Choose colour" id="XpI-pw-de3">
-                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="Nq3-kg-Bvu">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Nq3-kg-Bvu">
                             <connections>
                                 <action selector="cancel:" destination="eis-Ec-tAY" id="1db-FV-KC9"/>
                             </connections>

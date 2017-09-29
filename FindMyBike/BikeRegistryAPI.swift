@@ -49,6 +49,8 @@ class BikeRegistryAPI {
                     continue
                 }
             }
+
+            os_log("getBikes complete: registry now contains %lu bikes", log: self.log, type: .debug, registry.bikes.count)
         }
     }
 

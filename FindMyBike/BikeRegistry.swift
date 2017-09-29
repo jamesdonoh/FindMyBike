@@ -27,7 +27,7 @@ class BikeRegistry {
         }
     }
 
-    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", beaconMinor: 3, photo: UIImage(named: "bike2"), id: nil)
+    static var r1 = Bike(make: "Yamaha", model: "YZF-R1", colour: .blue, beaconMinor: 3, photo: UIImage(named: "bike2"), id: nil)
 
     var bikes = [UInt16: Bike]()
 
@@ -35,6 +35,10 @@ class BikeRegistry {
 
     init() {
         os_log("init; myBike is %@", log: log, type: .debug, myBike?.description ?? "nil")
+
+        #if IOS_SIMULATOR
+            os_log("documentDirectory: %@", log: log, type: .debug, BikeRegistry.documentDirectory.path)
+        #endif
     }
 
     // MARK: Public interface
