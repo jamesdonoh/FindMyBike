@@ -26,6 +26,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     var colour: Colour? {
         didSet {
             colourLabel.text = colour?.description ?? colourPrompt
+            colourSwatch.textColor = colour?.ui
         }
     }
 
@@ -35,6 +36,8 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBOutlet weak var makeTextField: UITextField!
     @IBOutlet weak var modelTextField: UITextField!
     @IBOutlet weak var colourLabel: UILabel!
+    @IBOutlet weak var colourSwatch: UILabel!
+
     @IBOutlet weak var beaconUUIDTextField: UITextField!
     @IBOutlet weak var beaconMajorTextField: UITextField!
     @IBOutlet weak var beaconMinorTextField: UITextField!
