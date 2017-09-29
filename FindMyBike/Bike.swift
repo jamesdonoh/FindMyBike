@@ -109,6 +109,10 @@ class Bike: NSObject, NSCoding {
 
     // Initialise from JSON API representation
     init(json: [String: Any]) throws {
+        guard let id = json[PropertyKey.id] as? String else {
+            throw SerialisationError.missing(PropertyKey.id)
+        }
+
         guard let make = json[PropertyKey.make] as? String else {
             throw SerialisationError.missing(PropertyKey.make)
         }
@@ -125,9 +129,14 @@ class Bike: NSObject, NSCoding {
             throw SerialisationError.missing(PropertyKey.isMissing)
         }
 
+        self.id = id
         self.make = make
         self.model = model
-        self.colour = json[PropertyKey.colour] as? Colour
+
+        if let colourStr = json[PropertyKey.colour] as? String {
+            self.colour = Colour(rawValue: colourStr)
+        }
+
         self.beaconMinor = beaconMinor
         self.isMissing = isMissing
 

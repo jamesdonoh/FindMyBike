@@ -42,7 +42,7 @@ class BikeRegistryAPI {
             for bikeJson in parsedJsonArray {
                 do {
                     let bike = try Bike(json: bikeJson)
-                    os_log("Adding bike: %@", log: self.log, type: .info, bike.makeAndModel)
+                    os_log("Adding bike: %@", log: self.log, type: .info, bike.description)
                     registry.bikes.updateValue(bike, forKey: bike.beaconMinor)
                 } catch {
                     os_log("Skipping invalid/incomplete JSON: %@", log: self.log, type: .error, bikeJson)

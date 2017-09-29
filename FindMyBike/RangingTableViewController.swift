@@ -86,7 +86,7 @@ class RangingTableViewController: UITableViewController {
         cell.photoImageView.image = monoBikeIcon
         cell.photoImageView.tintColor = defaultIconColour
 
-        //TODO simplify/restructure this and get rid of bike.bike etc.
+        //TODO simplify/restructure this
         if indexPath.section == 0 && myBike == nil {
             cell.titleLabel.text = "Not configured"
             cell.subtitleLabel.text = "Tap to edit"
