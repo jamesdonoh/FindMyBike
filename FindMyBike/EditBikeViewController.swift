@@ -216,7 +216,12 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         // Preserve existing ID, if any
         let id = bike?.id
 
-        return try Bike(make: make, model: model, colour: colour, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, isMissing: isMissing, photo: photo, id: id)
+        // Use device token obtained by AppDelegate in didRegisterForRemoteNotificationsWithDeviceToken
+        // TODO find a safer/more elegant way of obtaining this value
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let deviceToken = appDelegate.deviceToken
+
+        return try Bike(make: make, model: model, colour: colour, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, isMissing: isMissing, photo: photo, id: id, deviceToken: deviceToken)
     }
 
     private func createErrorAlert(title: String, message: String) -> UIAlertController {

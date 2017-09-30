@@ -18,13 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var deviceToken: String?
+
     // MARK: UIApplicationDelegate
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         os_log("didFinishLaunchingWithOptions", log: log, type: .debug)
         os_log("vendor ID = %@", log: log, type: .info, UIDevice.current.identifierForVendor?.description ?? "(none)")
 
-        // Register for push notifications via APNs
+        // Register for push notifications via APNs - note always uses AppDelegate
         UIApplication.shared.registerForRemoteNotifications()
 
         return true
@@ -45,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         os_log("Device token: %@", log: log, type: .info, token)
+
+        self.deviceToken = token
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
