@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import MapKit
 import os.log
 
 @UIApplicationMain
@@ -59,33 +60,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         os_log("Remote notifications not available: %@", log: log, type: .error, error.localizedDescription)
     }
 
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+    // Called when app is in foreground and a push notification is received
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        os_log("Received remote notification: %@", log: log, type: .info, userInfo)
-        completionHandler(.newData)
+        os_log("didReceiveRemoteNotification", log: log, type: .info)
+
+        showBikeSightedAlert(userInfo: userInfo)
+        completionHandler(.noData)
     }
 
     // MARK: UNUserNotificationCenterDelegate
 
-    // Called when app is in foreground
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//        os_log("willPresent: %@", log: log, type: .info, notification.request.content.body)
-//
-//        completionHandler(UNNotificationPresentationOptions.alert)
-//    }
-
-    // Called when app is in background and the user performs an action
+    // Called when app is in background and the user performs default notification action
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let content = response.notification.request.content
         os_log("didReceive: %@", log: log, type: .info, content.body)
 
-        guard let latitude = content.userInfo["latitude"] as? Double,
-            let longitude = content.userInfo["longitude"] as? Double else {
+        showBikeSightedAlert(userInfo: content.userInfo)
+        completionHandler()
+    }
+
+    // MARK: Private methods
+
+    private func showBikeSightedAlert(userInfo: [AnyHashable: Any]) {
+        guard let latitude = userInfo["latitude"] as? Double,
+            let longitude = userInfo["longitude"] as? Double else {
             fatalError("Missing/invalid coordinates in notification")
+        }
+
+        guard let bikeDescription = userInfo["bikeDescription"] as? String else {
+            fatalError("Missing bike description in notification")
         }
 
         os_log("Sighting at: %f,%f", log: log, type: .info, latitude, longitude)
 
-        completionHandler()
+        // TODO relocate this into its own class
+        let alert = AlertFactory.bikeSightedAlert(latitude: latitude, longitude: longitude) { _ in
+            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = bikeDescription
+            mapItem.openInMaps()
+        }
+        window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 }

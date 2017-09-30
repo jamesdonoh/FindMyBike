@@ -72,4 +72,16 @@ class AlertFactory {
 
         return alertController
     }
+
+    static func bikeSightedAlert(latitude: Double, longitude: Double, showHandler: @escaping (UIAlertAction) -> Void) -> UIAlertController {
+        let title = "Bike location reported"
+        let message = "Another user has detected your bike and reported its location. Tap Show to reveal the location in Maps."
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let showAction = UIAlertAction(title: "Show", style: .default, handler: showHandler)
+        alertController.addAction(cancelAction)
+        alertController.addAction(showAction)
+
+        return alertController
+    }
 }
