@@ -22,6 +22,13 @@ struct Constants {
 
     // MARK: API constants
 
-    static let apiBaseUrl = "https://murmuring-brushlands-57895.herokuapp.com"
+    #if DEBUG
+        // Use development API server
+        static let apiBaseUrl = "https://murmuring-brushlands-57895.herokuapp.com"
+    #else
+        // Use production API server
+        static let apiBaseUrl = "https://ancient-headland-59821.herokuapp.com"
+    #endif
+
     static let apiKey = "1ed61ce217fbf80"
 }
