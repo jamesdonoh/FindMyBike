@@ -60,4 +60,16 @@ class AlertFactory {
 
         return alertController
     }
+
+    static func reportSightingConfirmation(okHandler: @escaping (UIAlertAction) -> Void) -> UIAlertController {
+        let title = "Report bike location to owner?"
+        let message = "No personal information will be shared except your map location"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: okHandler)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+
+        return alertController
+    }
 }

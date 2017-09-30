@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class MainViewController: AppEventViewController, ProximityMonitorDelegate, BikeChangeDelegate, BikeRegistryAPIDelegate {
+class MainViewController: AppEventViewController, ProximityMonitorDelegate, RangingTableDelegate, BikeRegistryAPIDelegate {
 
     // MARK: Properties
 
@@ -105,10 +105,16 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Bike
         rangingTableViewController?.missingBikes = []
     }
 
-    // MARK: BikeChangeDelegate
+    // MARK: RangingTableDelegate
 
-    func myBikeChanged(newBike: Bike?) {
+    func myBikeUpdated(newBike: Bike?) {
         bikeRegistry.myBike = newBike
+    }
+
+    func reportSighting(bike: Bike) {
+        tryToPresent(AlertFactory.reportSightingConfirmation { _ in
+            self.bikeRegistry.api.reportSighting(bike: bike)
+        })
     }
 
     // MARK: BikeRegistryAPIDelegate

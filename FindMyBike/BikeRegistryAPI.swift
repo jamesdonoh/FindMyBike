@@ -23,6 +23,8 @@ class BikeRegistryAPI {
 
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: BikeRegistry.self))
 
+    let locationHelper = LocationHelper()
+
     weak var delegate: BikeRegistryAPIDelegate?
 
     // MARK: Public interface
@@ -57,22 +59,18 @@ class BikeRegistryAPI {
     func createOrUpdate(registry: BikeRegistry, bike: Bike?) {
         os_log("apiCreateOrUpdate: %@", log: log, type: .debug, bike?.description ?? "(no bike)")
 
-        guard let bike = bike, let bikeJson = bike.asJson else {
+        guard let bike = bike, let _ = bike.asJson else {
             os_log("Missing or invalid bike data, unable to update", log: log, type: .error)
             return
         }
 
-        os_log("Sending data: %@", log: log, type: .debug, String(data: bikeJson, encoding: .utf8)!)
-
-        let request = createOrUpdateRequest(bike: bike)
+        let request = createOrUpdateBikeRequest(bike: bike)
         jsonApiRequest(request: request) { parsedJson in
             guard let parsedJsonObject = parsedJson as? [String: Any] else {
                 os_log("JSON does not contain a single object", log: self.log, type: .error)
                 self.delegate?.requestFailed()
                 return
             }
-
-            //os_log("Got response: %@", log: self.log, type: .debug, parsedJsonObject)
 
             // Store ID from API response in bike instance
             if let newId = parsedJsonObject[Bike.PropertyKey.id] as? String {
@@ -82,10 +80,24 @@ class BikeRegistryAPI {
         }
     }
 
+    func reportSighting(bike: Bike) {
+        os_log("reportSighting: %@", log: log, type: .debug, bike.description)
+
+        locationHelper.getLocation { latitude, longitude in
+            let request = self.createSightingRequest(bike: bike, latitude: latitude, longitude: longitude)
+            self.jsonApiRequest(request: request)
+        }
+    }
+
     // MARK: Private methods
 
-    // Helper function for making JSON API requests
-    private func jsonApiRequest(request: URLRequest, completion: @escaping ((Any) -> Void)) {
+    // Helper method for making JSON API requests
+    private func jsonApiRequest(request: URLRequest, completion: ((Any) -> Void)? = nil) {
+        os_log("jsonApiRequest: %@", log: log, type: .debug, request.url!.path)
+        if let body = request.httpBody {
+            os_log("with body: %@", log: log, type: .debug, String(data: body, encoding: .utf8)!)
+        }
+
         session.dataTask(with: request) { data, response, error in
             if let error = error {
                 os_log("Request error: %@", log: self.log, type: .error, error.localizedDescription)
@@ -101,8 +113,10 @@ class BikeRegistryAPI {
             }
 
             do {
+                os_log("Got response: %@", log: self.log, type: .debug, String(data: data, encoding: .utf8)!)
                 let parsedJson = try JSONSerialization.jsonObject(with: data)
-                completion(parsedJson)
+
+                completion?(parsedJson)
             } catch {
                 os_log("Error deserialising JSON: %@", log: self.log, type: .error)
                 self.delegate?.requestFailed()
@@ -113,12 +127,12 @@ class BikeRegistryAPI {
 
     // Makes a GET request that returns a list of all bikes
     private func allBikesRequest() -> URLRequest {
-        return baseRequest()
+        return baseRequest(path: "/bikes")
     }
 
-    // Uses POST to updates an existing bike (if the 'id' property is set) or create a new one
-    private func createOrUpdateRequest(bike: Bike) -> URLRequest {
-        var request = baseRequest()
+    // Uses POST to update an existing bike (if the 'id' property is set) or create a new one
+    private func createOrUpdateBikeRequest(bike: Bike) -> URLRequest {
+        var request = baseRequest(path: "/bikes")
 
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
@@ -127,17 +141,36 @@ class BikeRegistryAPI {
         return request
     }
 
-    private func baseRequest() -> URLRequest {
-        var request = URLRequest(url: baseUrl())
+    // Uses POST to create a new sighting report
+    private func createSightingRequest(bike: Bike, latitude: Double, longitude: Double) -> URLRequest {
+        var request = baseRequest(path: "/sightings")
+
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+
+        let jsonData: [String: Any?] = [
+            "bikeId": bike.id,
+            "date": ISO8601DateFormatter().string(from: Date()),
+            "latitude": latitude,
+            "longitude": longitude
+        ]
+
+        request.httpBody = try! JSONSerialization.data(withJSONObject: jsonData)
+
+        return request
+    }
+
+    private func baseRequest(path: String) -> URLRequest {
+        var request = URLRequest(url: baseUrl(path: path))
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")
 
         return request
     }
 
-    private func baseUrl() -> URL {
+    private func baseUrl(path: String) -> URL {
         var components = URLComponents(string: Constants.apiBaseUrl)!
         components.queryItems = [URLQueryItem(name: "key", value: Constants.apiKey)]
-        components.path = "/bikes"
+        components.path = path
         
         return components.url!
     }

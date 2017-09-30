@@ -12,8 +12,9 @@
 import UIKit
 import os.log
 
-protocol BikeChangeDelegate: class {
-    func myBikeChanged(newBike: Bike?)
+protocol RangingTableDelegate: class {
+    func myBikeUpdated(newBike: Bike?)
+    func reportSighting(bike: Bike)
 }
 
 class RangingTableViewController: UITableViewController {
@@ -41,7 +42,7 @@ class RangingTableViewController: UITableViewController {
         }
     }
 
-    weak var delegate: BikeChangeDelegate?
+    weak var delegate: RangingTableDelegate?
 
     var myBikeProximity: String?
 
@@ -64,7 +65,7 @@ class RangingTableViewController: UITableViewController {
             self.myBike = bike
 
             // Propagate bike change to parent for persistence (we only have weak ref)
-            delegate?.myBikeChanged(newBike: myBike)
+            delegate?.myBikeUpdated(newBike: myBike)
         }
     }
 
@@ -94,6 +95,7 @@ class RangingTableViewController: UITableViewController {
             var bike: (bike: Bike, proximity: String)
             if indexPath.section == 0 && myBike != nil {
                 bike = (bike: myBike!, proximity: myBikeProximity ?? "Not in range")
+                cell.accessoryType = .disclosureIndicator
             } else {
                 bike = missingBikes[indexPath.row]
             }
@@ -138,6 +140,8 @@ class RangingTableViewController: UITableViewController {
             performSegue(withIdentifier: RangingTableViewController.editBikeSegueIdentifier, sender: self)
         default:
             os_log("selected other row", log: log, type: .debug)
+            tableView.deselectRow(at: indexPath, animated: false)
+            delegate?.reportSighting(bike: missingBikes[indexPath.row].bike)
         }
     }
 }
