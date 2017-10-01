@@ -103,8 +103,6 @@ class RangingTableViewController: UITableViewController {
                 bike = missingBikes[indexPath.row]
             }
 
-            cell.accessoryType = .disclosureIndicator
-
             cell.titleLabel.text = bike.bike.makeAndModel
             cell.subtitleLabel.text = bike.proximity
 
