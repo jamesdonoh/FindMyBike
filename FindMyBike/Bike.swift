@@ -15,7 +15,11 @@ class Bike: NSObject, NSCoding {
     // MARK: Properties
 
     // Lowest minor number that users are allowed to use
-    static let minValidMinor = UInt16(100)
+    #if DEBUG
+        static let minValidMinor = UInt16(0)
+    #else
+        static let minValidMinor = UInt16(100)
+    #endif
     
     struct PropertyKey {
         static let id = "id"
