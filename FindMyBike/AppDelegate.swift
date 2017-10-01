@@ -8,7 +8,6 @@
 
 import UIKit
 import UserNotifications
-import MapKit
 import os.log
 
 @UIApplicationMain
@@ -92,16 +91,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             fatalError("Missing bike description in notification")
         }
 
-        os_log("Sighting at: %f,%f", log: log, type: .info, latitude, longitude)
+        os_log("Sighting of %@ at: %f,%f", log: log, type: .info, bikeDescription, latitude, longitude)
 
-        // TODO relocate this into its own class
-        let alert = AlertFactory.bikeSightedAlert(latitude: latitude, longitude: longitude) { _ in
-            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
-            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = bikeDescription
-            mapItem.openInMaps()
-        }
+        let alert = AlertFactory.bikeSighted(latitude: latitude, longitude: longitude, description: bikeDescription)
         window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 }

@@ -75,7 +75,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Rang
     func noDeviceBeaconSupport() {
         // Avoid repeating alert every time app comes into foreground
         if !haveAlertedNoBeaconSupport {
-            tryToPresent(AlertFactory.makeNoBeaconSupport())
+            tryToPresent(AlertFactory.noBeaconSupport())
             haveAlertedNoBeaconSupport = true
         }
     }
@@ -112,7 +112,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Rang
     }
 
     func reportSighting(bike: Bike) {
-        tryToPresent(AlertFactory.reportSightingConfirmation { _ in
+        tryToPresent(AlertFactory.confirmReportSighting { _ in
             self.bikeRegistry.api.reportSighting(bike: bike)
         })
     }

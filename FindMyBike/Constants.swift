@@ -22,6 +22,9 @@ struct Constants {
 
     // MARK: API constants
 
+    // Use appropriate API server to ensure push notifications are delivered correctly
+    // Note that the only accurate way to do this is by inspecting the value of the 
+    // aps-environment entitlement property at runtime but that is non-trivial
     #if DEBUG
         // Use development API server
         static let apiBaseUrl = "https://murmuring-brushlands-57895.herokuapp.com"

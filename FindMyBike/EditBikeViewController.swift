@@ -102,7 +102,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
             os_log("Created bike instance: %@", log: log, type: .error, validatedBike!.description)
             return true
         } catch let error as Bike.ValidationError {
-            let alert = createErrorAlert(title: error.title, message: error.description)
+            let alert = AlertFactory.generic(title: error.title, message: error.description)
             parent?.present(alert, animated: true)
 
             return false
@@ -150,7 +150,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         os_log("missingSwitchFlipped, now: %@", log: log, type: .debug, String(missingSwitch.isOn))
 
         if missingSwitch.isOn {
-            let alert = AlertFactory.makeMissingBikeAlert()
+            let alert = AlertFactory.confirmBikeMissing()
             parent?.present(alert, animated: true)
         }
     }
@@ -222,14 +222,6 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         let deviceToken = appDelegate.deviceToken
 
         return try Bike(make: make, model: model, colour: colour, beaconUUIDStr: beaconUUIDStr, beaconMajorStr: beaconMajorStr, beaconMinorStr: beaconMinorStr, isMissing: isMissing, photo: photo, id: id, deviceToken: deviceToken)
-    }
-
-    private func createErrorAlert(title: String, message: String) -> UIAlertController {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-
-        return alertController
     }
 
     // Updates the photo image view, programmatically creating a new aspect ratio constraint
