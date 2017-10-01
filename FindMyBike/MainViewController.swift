@@ -41,6 +41,14 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Rang
 
         bikeRegistry.api.delegate = self
         bikeRegistry.loadBikes()
+
+        #if IOS_SIMULATOR
+            // Trigger synthetic range event to allow generation of screenshots on simulator
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+                let fakeBeacons = Array(self.bikeRegistry.bikes.keys).map { (minor: $0, proximity: "Near")}
+                self.didRangeBeacons(beacons: fakeBeacons)
+            }
+        #endif
     }
 
     // Store references to  child view controllers when embed segue occurs

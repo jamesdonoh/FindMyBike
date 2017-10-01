@@ -46,8 +46,6 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @IBOutlet weak var missingSwitch: UISwitch!
 
     @IBOutlet weak var photoImageView: UIImageView!
-    
-    @IBOutlet weak var testDataButton: UIButton!
 
     weak var photoAspectRatioConstraint: NSLayoutConstraint!
 
@@ -73,10 +71,6 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         beaconMajorTextField.text = String(Constants.applicationMajor)
 
         populateViewWithBike()
-
-        #if IOS_SIMULATOR
-            testDataButton.isHidden = false
-        #endif
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -135,11 +129,6 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
         imagePickerController.delegate = self
 
         present(imagePickerController, animated: true, completion: nil)
-    }
-
-    @IBAction func loadTestData(_ sender: Any) {
-        bike = BikeRegistry.r1
-        populateViewWithBike()
     }
 
     @IBAction func unwindToEditBike(sender: UIStoryboardSegue) {
