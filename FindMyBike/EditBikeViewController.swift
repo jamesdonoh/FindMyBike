@@ -67,12 +67,16 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
 
         colourLabel.text = colourPrompt
         missingSwitch.isOn = false
-        
+
+        // NB at the moment only one beacon UUID and major is supported
+        beaconUUIDTextField.text = Constants.applicationUUID.uuidString
+        beaconMajorTextField.text = String(Constants.applicationMajor)
+
         populateViewWithBike()
 
-//        #if IOS_SIMULATOR
+        #if IOS_SIMULATOR
             testDataButton.isHidden = false
-//        #endif
+        #endif
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -189,8 +193,6 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
             modelTextField.text = bike.model
             colour = bike.colour
 
-            beaconUUIDTextField.text = bike.beaconUUID.uuidString
-            beaconMajorTextField.text = String(bike.beaconMajor)
             beaconMinorTextField.text = String(bike.beaconMinor)
 
             missingSwitch.isOn = bike.isMissing
