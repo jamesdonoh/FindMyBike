@@ -16,5 +16,3 @@ When the app is first run, it prompts asking you to grant the necessary permissi
 > Note: _FindMyBike_ requests access to your location in the background in order to be able to detect iBeacons in your vicinity. It only determines your absolute location when you explicitly ask it to by reporting a missing bike.
 
 Tap **Allow** in response to these prompts to ensure the app functions correctly. If you do not grant the permissions, some app features will not be available.
-
-### Main screen
