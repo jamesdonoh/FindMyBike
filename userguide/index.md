@@ -8,6 +8,6 @@ This document is a beginner's guide to how to use *FindMyBike*. It contains step
 
 When you first run *FindMyBike* the main screen is displayed.
 
-![Main screen](01.png)
+<img src="images/full/01.png" height="300">
 
 This is a very usedful screen.
