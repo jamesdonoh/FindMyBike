@@ -8,3 +8,6 @@ This document is a beginner's guide to how to use *FindMyBike*. It contains step
 
 When you first run *FindMyBike* the main screen is displayed.
 
+![Main screen](01.png)
+
+This is a very usedful screen.
