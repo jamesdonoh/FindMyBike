@@ -127,7 +127,7 @@ class MainViewController: AppEventViewController, ProximityMonitorDelegate, Rang
 
     func tryToPresent(_ alert: UIAlertController) {
         if let currentlyPresented = parent?.presentedViewController as? UIAlertController {
-            os_log("Refusing to present alert because already presenting: %@", log: ShowBikeViewController.log, type: .error, currentlyPresented.title!)
+            os_log("Refusing to present alert because already presenting: %@", log: log, type: .error, currentlyPresented.title!)
         } else {
             parent?.present(alert, animated: true)
         }

@@ -16,7 +16,6 @@
 		FD153DCF1F65866200ED463C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD153DCD1F65866200ED463C /* LaunchScreen.storyboard */; };
 		FD153DDA1F65866200ED463C /* FindMyBikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DD91F65866200ED463C /* FindMyBikeTests.swift */; };
 		FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE41F65962700ED463C /* EditBikeViewController.swift */; };
-		FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE61F65964200ED463C /* ShowBikeViewController.swift */; };
 		FD153DE91F65A97A00ED463C /* Bike.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD153DE81F65A97A00ED463C /* Bike.swift */; };
 		FD1EF2BE1F7F8411008A7554 /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1EF2BD1F7F8411008A7554 /* LocationHelper.swift */; };
 		FD67A6D41F72ECB70095ACD2 /* CLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD67A6D31F72ECB70095ACD2 /* CLExtensions.swift */; };
@@ -26,7 +25,6 @@
 		FDD111391F6E89D500D5B0B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD111381F6E89D500D5B0B3 /* Constants.swift */; };
 		FDD1113B1F6E8E1400D5B0B3 /* ProximityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */; };
 		FDE47A371F6D7D05004D0C45 /* BluetoothSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */; };
-		FDE47A381F6D7D05004D0C45 /* Ranging.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A331F6D7D05004D0C45 /* Ranging.swift */; };
 		FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */; };
 		FDE47A3A1F6D7D05004D0C45 /* AppEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */; };
 		FDE9CC691F719FD500A5A080 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CC681F719FD500A5A080 /* Notifications.swift */; };
@@ -57,7 +55,6 @@
 		FD153DD91F65866200ED463C /* FindMyBikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMyBikeTests.swift; sourceTree = "<group>"; };
 		FD153DDB1F65866200ED463C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD153DE41F65962700ED463C /* EditBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBikeViewController.swift; sourceTree = "<group>"; };
-		FD153DE61F65964200ED463C /* ShowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowBikeViewController.swift; sourceTree = "<group>"; };
 		FD153DE81F65A97A00ED463C /* Bike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bike.swift; sourceTree = "<group>"; };
 		FD1EF2BD1F7F8411008A7554 /* LocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		FD3041B71F7829FC0021DF28 /* FindMyBike.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FindMyBike.entitlements; sourceTree = "<group>"; };
@@ -68,7 +65,6 @@
 		FDD111381F6E89D500D5B0B3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityMonitor.swift; sourceTree = "<group>"; };
 		FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothSupport.swift; sourceTree = "<group>"; };
-		FDE47A331F6D7D05004D0C45 /* Ranging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ranging.swift; sourceTree = "<group>"; };
 		FDE47A341F6D7D05004D0C45 /* AlertFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEventViewController.swift; sourceTree = "<group>"; };
 		FDE9CC681F719FD500A5A080 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -120,22 +116,20 @@
 				FD153DC41F65866200ED463C /* AppDelegate.swift */,
 				FDE47A351F6D7D05004D0C45 /* AppEventViewController.swift */,
 				FD153DE81F65A97A00ED463C /* Bike.swift */,
-				FD9D270F1F7D7969003F5B1A /* Colour.swift */,
 				FD6E7FF11F6E7E13005E8908 /* BikeRegistry.swift */,
 				FDEA10641F78D5E000205176 /* BikeRegistryAPI.swift */,
 				FDE47A321F6D7D05004D0C45 /* BluetoothSupport.swift */,
 				FD67A6D31F72ECB70095ACD2 /* CLExtensions.swift */,
+				FD9D270F1F7D7969003F5B1A /* Colour.swift */,
 				FD9D270D1F7D5CBC003F5B1A /* ColourTableViewController.swift */,
 				FDD111381F6E89D500D5B0B3 /* Constants.swift */,
 				FD153DE41F65962700ED463C /* EditBikeViewController.swift */,
+				FD1EF2BD1F7F8411008A7554 /* LocationHelper.swift */,
 				FD11EE9D1F6DA0E200A597CF /* MainViewController.swift */,
 				FDE9CC681F719FD500A5A080 /* Notifications.swift */,
 				FDD1113A1F6E8E1400D5B0B3 /* ProximityMonitor.swift */,
-				FD1EF2BD1F7F8411008A7554 /* LocationHelper.swift */,
-				FDE47A331F6D7D05004D0C45 /* Ranging.swift */,
 				FD11EEA71F6DA9D900A597CF /* RangingTableViewCell.swift */,
 				FD11EEA11F6DA13C00A597CF /* RangingTableViewController.swift */,
-				FD153DE61F65964200ED463C /* ShowBikeViewController.swift */,
 				FD153DCB1F65866200ED463C /* Assets.xcassets */,
 				FD153DCD1F65866200ED463C /* LaunchScreen.storyboard */,
 				FD153DC81F65866200ED463C /* Main.storyboard */,
@@ -266,12 +260,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD6E7FF21F6E7E13005E8908 /* BikeRegistry.swift in Sources */,
-				FDE47A381F6D7D05004D0C45 /* Ranging.swift in Sources */,
 				FDE47A3A1F6D7D05004D0C45 /* AppEventViewController.swift in Sources */,
 				FD153DE51F65962700ED463C /* EditBikeViewController.swift in Sources */,
 				FD1EF2BE1F7F8411008A7554 /* LocationHelper.swift in Sources */,
 				FD153DE91F65A97A00ED463C /* Bike.swift in Sources */,
-				FD153DE71F65964200ED463C /* ShowBikeViewController.swift in Sources */,
 				FDD1113B1F6E8E1400D5B0B3 /* ProximityMonitor.swift in Sources */,
 				FDE47A391F6D7D05004D0C45 /* AlertFactory.swift in Sources */,
 				FD11EE9E1F6DA0E200A597CF /* MainViewController.swift in Sources */,
