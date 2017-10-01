@@ -13,6 +13,8 @@ class Notifications {
 
     // MARK: Properties
 
+    static let localIdentifier = "FMBLLocalNotification"
+
     let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: Notifications.self))
 
     let center = UNUserNotificationCenter.current()
@@ -46,8 +48,7 @@ class Notifications {
 
         let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 10, repeats: false)
 
-        let identifier = "FMBLLocalNotification"
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: Notifications.localIdentifier, content: content, trigger: trigger)
         center.add(request) { (error) in
             if let error = error {
                 os_log("Error adding notifiation: %@", log: self.log, type: .error, error.localizedDescription)

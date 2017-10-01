@@ -87,6 +87,10 @@ class RangingTableViewController: UITableViewController {
         cell.photoImageView.image = monoBikeIcon
         cell.photoImageView.tintColor = defaultIconColour
 
+        if indexPath.section == 0 {
+            cell.accessoryType = .disclosureIndicator
+        }
+
         //TODO simplify/restructure this
         if indexPath.section == 0 && myBike == nil {
             cell.titleLabel.text = "Not configured"
@@ -95,10 +99,11 @@ class RangingTableViewController: UITableViewController {
             var bike: (bike: Bike, proximity: String)
             if indexPath.section == 0 && myBike != nil {
                 bike = (bike: myBike!, proximity: myBikeProximity ?? "Not in range")
-                cell.accessoryType = .disclosureIndicator
             } else {
                 bike = missingBikes[indexPath.row]
             }
+
+            cell.accessoryType = .disclosureIndicator
 
             cell.titleLabel.text = bike.bike.makeAndModel
             cell.subtitleLabel.text = bike.proximity

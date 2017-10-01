@@ -13,6 +13,9 @@ import os.log
 class Bike: NSObject, NSCoding {
 
     // MARK: Properties
+
+    // Lowest minor number that users are allowed to use
+    static let minValidMinor = UInt16(100)
     
     struct PropertyKey {
         static let id = "id"
@@ -61,7 +64,7 @@ class Bike: NSObject, NSCoding {
             case .invalidBeaconMajor:
                 return "The beacon major must be in the range 0-65535"
             case .invalidBeaconMinor:
-                return "The beacon minor must be in the range 0-66535"
+                return "The beacon minor must be in the range \(Bike.minValidMinor)-66535"
             }
         }
     }
@@ -224,7 +227,7 @@ class Bike: NSObject, NSCoding {
         guard let beaconMajor = UInt16(beaconMajorStr) else {
             throw ValidationError.invalidBeaconMajor
         }
-        guard let beaconMinor = UInt16(beaconMinorStr) else {
+        guard let beaconMinor = UInt16(beaconMinorStr), beaconMinor >= Bike.minValidMinor else {
             throw ValidationError.invalidBeaconMinor
         }
 

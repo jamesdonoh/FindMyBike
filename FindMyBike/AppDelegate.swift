@@ -75,7 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let content = response.notification.request.content
         os_log("didReceive: %@", log: log, type: .info, content.body)
 
-        showBikeSightedAlert(userInfo: content.userInfo)
+        if response.notification.request.identifier != Notifications.localIdentifier {
+            // TODO use notification categories to distinguish between types
+            showBikeSightedAlert(userInfo: content.userInfo)
+        }
+
         completionHandler()
     }
 

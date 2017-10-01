@@ -26,7 +26,7 @@ class EditBikeViewController: UIViewController, UITextFieldDelegate, UINavigatio
     var colour: Colour? {
         didSet {
             colourLabel.text = colour?.description ?? colourPrompt
-            colourSwatch.textColor = colour?.ui
+            colourSwatch.textColor = colour?.ui ?? UIColor.clear
         }
     }
 
