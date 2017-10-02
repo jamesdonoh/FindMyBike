@@ -2,7 +2,7 @@
 
 This document is a beginner's guide to how to use _FindMyBike_. It contains step-by-step explanations of how the app works along with useful tips for getting the most out of _FindMyBike_.
 
-## Prerequisites
+## Prerequisites
 
 The following are the requirements for using _FindMyBike_
 
