@@ -1,8 +1,20 @@
-# FindMyBike User Guide
+# User Guide
 
 This document is a beginner's guide to how to use _FindMyBike_. It contains step-by-step explanations of how the app works along with useful tips for getting the most out of _FindMyBike_.
 
+## Prerequisites
+
+The following are the requirements for using _FindMyBike_
+
+- an iBeacon
+- an iPhone running iOS 10 or later
+- Bluetooth support enabled (see **Settings**)
+- Location Services enabled (see **Settings**)
+- Mobile data or WiFi connection
+
 ## About iBeacons
+
+<img src="https://developer.apple.com/ibeacon/images/ibeacon-logo.svg">
 
 _FindMyBike_ uses iBeacons to help you track down your bike. iBeacon is a beacon technology developed by Apple based on Bluetooth Low Energy (BLE) which allows beacons to be detected by a suitable app, such as _FindMyBike_.
 
@@ -24,6 +36,10 @@ iBeacon identifiers are split into three parts: UUID, major and minor. For _Find
 - Major: `1`
 
 The minor component is unique to your bike. You can use any number between 100-65535. Make a note of the number used to input when configuring _FindMyBike_ below.
+
+### What do I do next?
+
+After configuring your iBeacon, attach it securely and discreetly to your bike using the supplied adhesive sticker. Then install and run the _FindMyBike_ app.
 
 ## Using _FindMyBike_
 
@@ -74,4 +90,46 @@ Use this screen to enter information about your bike so that other users will be
 
 After you have completed all the bike details, tap the 'Save' button to store all the information and upload it to the _FindMyBike_ servers.
 
-<img src="images/full/06.png" height="400">
+<img src="images/full/07.png" height="400">
+
+### Detecting missing bikes
+
+After you have run the app for the first time, if you enter an area containing one or more bikes that have been reported as missing, _FindMyBike_ will detect the bike's iBeacon and show an alert in Notifiation Center:
+
+<img src="images/full/09.png" height="400">
+
+Tap the notification to open `FindMyBike` and view a list of all missing bikes in your vicinity:
+
+<img src="images/full/10.png" height="400">
+
+Use the information in the 'Missing bikes nearby' table to help identify the missing bike that has been detected.
+
+> Hint: under the name of each bike, a proximity label shows your relative distance to the bike, either 'Immediate', 'Near', 'Far' or 'Unknown'. If you can see a bike matching the make, model and colour, move closer to it to provide the most accurate report of its location.
+
+If you want to report the location where you deteced the missing bike to its owner, tap the row containing the bike. The following prompt appears:
+
+<img src="images/full/11.png" height="400">
+
+Tap **OK** to send a report of your location to the bike's owner. Tap **Cancel** to return to the main screen without reporting your location.
+
+### Reporting your bike missing
+
+If your bike is missing, tap on the 'My bike' section on the main screen to access the **edit bike** screen, and then activate the 'Bike is missing' switch. An alert will appear informing you that you will receive a push notification if your bike is detected.
+
+> Note: if you did not allow _FindMyBike_ to send you notifications when you installed it, go to the **Settings** app to enable it now.
+
+If the location of your missing bike is detected by another _FinyMyBike_ user, you will receive a notification such as the following:
+
+<img src="images/full/12.png" height="400">
+
+Tap the notification to open the app and you will see the following message:
+
+<img src="images/full/13.png" height="400">
+
+Tap **Show** to reveal the location of your bike using the **Maps** application:
+
+<img src="images/full/14.png" height="400">
+
+Now go find it!
+
+> Hint: once you have located your bike, remember to disable the 'Bike is missing' option on the **edit bike** screen to avoid receiving further notifications.
