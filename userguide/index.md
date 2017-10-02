@@ -14,7 +14,7 @@ The following are the requirements for using _FindMyBike_
 
 ## About iBeacons
 
-<img src="https://developer.apple.com/ibeacon/images/ibeacon-logo.svg">
+<img src="https://developer.apple.com/ibeacon/images/ibeacon-logo.svg" width="200">
 
 _FindMyBike_ uses iBeacons to help you track down your bike. iBeacon is a beacon technology developed by Apple based on Bluetooth Low Energy (BLE) which allows beacons to be detected by a suitable app, such as _FindMyBike_.
 
