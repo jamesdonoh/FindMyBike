@@ -43,7 +43,6 @@ class BikeRegistry {
 
     // MARK: Public interface
 
-    // TODO make these more elegant using map/filter?
     func findMyBikeProximity(beacons: [(minor: UInt16, proximity: String)]) -> String? {
         for beacon in beacons {
             if beacon.minor == myBike?.beaconMinor {
@@ -55,7 +54,6 @@ class BikeRegistry {
     }
 
     func findMissingBikes(beacons: [(minor: UInt16, proximity: String)]) -> [(bike: Bike, proximity: String)] {
-        // TODO make this more elegant using map/filter?
         var missing = [(bike: Bike, proximity: String)]()
 
         for beacon in beacons {
@@ -70,7 +68,6 @@ class BikeRegistry {
     }
 
     func loadBikes() {
-        //TODO reactor avoid API class having to know about registry  
         api.getBikes(registry: self)
     }
 
